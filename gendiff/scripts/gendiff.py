@@ -4,6 +4,15 @@ from gendiff import cmd
 import json
 
 
+def format_line(key, value, symbol=' ', indent=2):
+    indent = ' ' * indent
+
+    if isinstance(value, int):
+        value = str(value).lower()
+
+    return f'{indent}{symbol} {key}: {value}'
+
+
 def generate_diff(json1, json2):
     removed = json1.keys() - json2.keys()
     added = json2.keys() - json1.keys()
@@ -13,15 +22,15 @@ def generate_diff(json1, json2):
     result = ['{']
     for k in sorted(all):
         if k in removed:
-            result.append(f'  - {k}: {json1[k]}')
+            result.append(format_line(k, json1[k], '-'))
         if k in added:
-            result.append(f'  + {k}: {json2[k]}')
+            result.append(format_line(k, json2[k], '+'))
         if k in same:
             if json1[k] != json2[k]:
-                result.append(f'  - {k}: {json1[k]}')
-                result.append(f'  + {k}: {json2[k]}')
+                result.append(format_line(k, json1[k], '-'))
+                result.append(format_line(k, json2[k], '+'))
             else:
-                result.append(f'    {k}: {json1[k]}')
+                result.append(format_line(k, json1[k]))
     result.append('}')
 
     return '\n'.join(result)
