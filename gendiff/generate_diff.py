@@ -34,17 +34,6 @@ def compare_objects(json1, json2):
     return '\n'.join(result)
 
 
-def generate_diff():
-    args = get_args()
-    file1 = args.first_file
-    file2 = args.second_file
-
-    json1 = json.load(open(file1))
-    json2 = json.load(open(file2))
-
-    print(compare_objects(json1, json2))
-
-
 def get_args():
     parser = argparse.ArgumentParser(
         prog='gendiff',
@@ -55,3 +44,14 @@ def get_args():
     args = parser.parse_args()
 
     return args
+
+
+def generate_diff():
+    args = get_args()
+    file1 = args.first_file
+    file2 = args.second_file
+
+    json1 = json.load(open(file1))
+    json2 = json.load(open(file2))
+
+    print(compare_objects(json1, json2))
