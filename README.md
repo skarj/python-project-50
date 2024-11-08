@@ -5,4 +5,8 @@
 # Gendiff
 Compare two configuration files and show a difference
 
-# TODO: add demo for flat diff
+# Flat Diff for JSON files
+TODO: add demo
+
+# Flat Diff for YAML files
+TODO: add demo
