@@ -25,16 +25,17 @@ def create_diff(obj1, obj2):
         if k in removed:
             diff[k] = {
                 'value': obj1[k],
-                'removed': True
+                'state': 'removed'
             }
         elif k in added:
             diff[k] = {
                 'value': obj2[k],
-                'added': True
+                'state': 'added'
             }
         elif k in same and obj1[k] != obj2[k]:
             diff[k] = {
                 'value': obj1[k],
+                'state': 'changed',
                 'new_value': obj2[k]
             }
         else:
@@ -55,15 +56,16 @@ def render_stylish_line(key, value, symbol=' ', indent=2):
 def format_stylish(diff, indent=1):
     result = ['{']
     for k, v in sorted(diff.items()):
-        if 'removed' in v:
-            result.append(render_stylish_line(k, v['value'], '-', indent))
-        elif 'added' in v:
-            result.append(render_stylish_line(k, v['value'], '+', indent))
-        elif 'new_value' in v:
-            result.append(render_stylish_line(k, v['value'], '-', indent))
-            result.append(render_stylish_line(k, v['new_value'], '+', indent))
+        if 'state' in v:
+            if v['state'] == 'removed' or v['state'] == 'changed':
+                result.append(render_stylish_line(k, v['value'], '-', indent))
+            if v['state'] == 'added':
+                result.append(render_stylish_line(k, v['value'], '+', indent))
+            if v['state'] == 'changed':
+                result.append(render_stylish_line(k, v['new_value'], '+', indent))
         else:
             result.append(render_stylish_line(k, v['value'], ' ', indent))
+
     result.append('}')
 
     return result
