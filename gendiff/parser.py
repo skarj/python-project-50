@@ -55,16 +55,15 @@ def render_stylish_line(key, value, symbol=' ', indent=2):
 def format_stylish(diff, indent=1):
     result = ['{']
     for k, v in sorted(diff.items()):
-        print(v)
         if 'removed' in v:
-            result.append(render_stylish_line(k, v['value'], '-'))
+            result.append(render_stylish_line(k, v['value'], '-', indent))
         elif 'added' in v:
-            result.append(render_stylish_line(k, v['value'], '+'))
+            result.append(render_stylish_line(k, v['value'], '+', indent))
         elif 'new_value' in v:
-            result.append(render_stylish_line(k, v['value'], '-'))
-            result.append(render_stylish_line(k, v['new_value'], '+'))
+            result.append(render_stylish_line(k, v['value'], '-', indent))
+            result.append(render_stylish_line(k, v['new_value'], '+', indent))
         else:
-            result.append(render_stylish_line(k, v['value']))
+            result.append(render_stylish_line(k, v['value'], ' ', indent))
     result.append('}')
 
     return result
