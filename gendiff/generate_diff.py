@@ -76,7 +76,6 @@ def generate_diff(file1, file2, format_name='stylish'):
 
     diff = create_diff(object1, object2)
 
-
     if format_name == 'stylish':
         result = format_stylish(diff)
 
