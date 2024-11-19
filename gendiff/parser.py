@@ -93,7 +93,7 @@ def format_stylish(diff, indent_size=4):
             elif v['state'] == 'changed':
                 result.extend(format_json({k: v['value']}, depth, '-'))
                 result.extend(format_json({k: v['new_value']}, depth, '+'))
-            else:
+            elif v['state'] == 'unchanged':
                 result.extend(format_json({k: v['value']}, depth, ' '))
 
         return result
