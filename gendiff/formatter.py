@@ -1,5 +1,4 @@
-def render_stylish(json, depth=1, diff_symbol=' ',
-                indent_symbol=' ', indent_size=4):
+def render_stylish(json, depth=1, diff_symbol=' ', indent_symbol=' ', indent_size=4):
 
     def parse(data, result, depth, diff_symbol):
         indent = indent_symbol * (indent_size * depth - 2)
@@ -33,9 +32,8 @@ def format_stylish(diff, indent_size=4):
                 format(v['children'], result, depth + 1)
                 result.append(f'{indent}  }}')
             else:
-                diff_symbol = ' ' if v['state'] == 'unchanged' \
-                    else '-' if v['state'] == 'removed' \
-                    or v['state'] == 'changed' else '+'
+                diff_symbol = ' ' if v['state'] == 'unchanged' else '-' \
+                    if v['state'] == 'removed' or v['state'] == 'changed' else '+'
                 result.extend(render_stylish({k: v['value']}, depth, diff_symbol))
 
                 if v['state'] == 'changed':

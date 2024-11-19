@@ -58,7 +58,7 @@ def create_diff(obj1, obj2):
     return diff
 
 
-def generate_diff(file1, file2):
+def generate_diff(file1, file2, format_name='stylish'):
     _, file1_format = os.path.splitext(file1)
     _, file2_format = os.path.splitext(file2)
 
@@ -73,6 +73,7 @@ def generate_diff(file1, file2):
     object2 = file2_parser(file2)
 
     diff = create_diff(object1, object2)
-    result = format_stylish(diff)
+    if format_name == 'stylish':
+        result = format_stylish(diff)
 
     return '\n'.join(result)
