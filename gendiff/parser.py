@@ -86,15 +86,14 @@ def format_stylish(diff, indent_size=4):
                 result.append(f'{indent}  {k}: {{')
                 format(v['children'], result, depth + 1)
                 result.append(f'{indent}  }}')
-            elif v['state'] == 'removed':
-                result.extend(format_json({k: v['value']}, depth, '-'))
-            elif v['state'] == 'added':
-                result.extend(format_json({k: v['value']}, depth, '+'))
-            elif v['state'] == 'changed':
-                result.extend(format_json({k: v['value']}, depth, '-'))
-                result.extend(format_json({k: v['new_value']}, depth, '+'))
-            elif v['state'] == 'unchanged':
-                result.extend(format_json({k: v['value']}, depth, ' '))
+            else:
+                diff_symbol = ' ' if v['state'] == 'unchanged' \
+                    else '-' if v['state'] == 'removed' \
+                    or v['state'] == 'changed' else '+'
+                result.extend(format_json({k: v['value']}, depth, diff_symbol))
+
+                if v['state'] == 'changed':
+                    result.extend(format_json({k: v['new_value']}, depth, '+'))
 
         return result
 
