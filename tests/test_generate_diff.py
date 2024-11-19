@@ -17,6 +17,8 @@ def _input_files_complex():
     return {
         'json1': 'tests/fixtures/complex1.json',
         'json2': 'tests/fixtures/complex2.json',
+        'yaml1': 'tests/fixtures/complex1.yaml',
+        'yaml2': 'tests/fixtures/complex2.yaml',
     }
 
 
@@ -42,6 +44,10 @@ def test_compare_correct_json_files_complex(input_files_complex, result_complex)
 
 def test_compare_correct_yaml_files(input_files_simple, result_simple):
     assert generate_diff(input_files_simple['yaml1'], input_files_simple['yaml2']) == result_simple
+
+
+def test_compare_correct_yaml_files_complex(input_files_complex, result_complex):
+    assert generate_diff(input_files_complex['yaml1'], input_files_complex['yaml2']) == result_complex
 
 
 def test_compare_correct_yam_json_files(input_files_simple, result_simple):
