@@ -1,8 +1,22 @@
 import argparse
 import os
-from gendiff.parser import get_parser, create_diff, format_stylish
+import json
+import yaml
+from gendiff.formatter import format_stylish
 
 SUPPORTED_FORMATS = ['.json', '.yaml', '.yml']
+
+
+def get_parser(format):
+    def loader(file):
+        if format in ['.yaml', 'yml']:
+            obj = yaml.load(open(file), Loader=yaml.Loader)
+        else:
+            obj = json.load(open(file))
+
+        return obj
+
+    return loader
 
 
 def get_args():
@@ -15,6 +29,33 @@ def get_args():
     parser.add_argument('-f', '--format', help='set format of output')
 
     return parser.parse_args()
+
+
+def create_diff(obj1, obj2):
+    removed = obj1.keys() - obj2.keys()
+    added = obj2.keys() - obj1.keys()
+    same = obj2.keys() & obj1.keys()
+    all = removed | added | same
+
+    diff = {}
+    for k in all:
+        if k in removed:
+            diff[k] = {'value': obj1[k], 'state': 'removed'}
+        elif k in added:
+            diff[k] = {'value': obj2[k], 'state': 'added'}
+        elif k in same and obj1[k] != obj2[k]:
+            if isinstance(obj1[k], dict) and isinstance(obj2[k], dict):
+                diff[k] = {'children': create_diff(obj1[k], obj2[k])}
+            else:
+                diff[k] = {
+                    'value': obj1[k],
+                    'state': 'changed',
+                    'new_value': obj2[k]
+                }
+        else:
+            diff[k] = {'value': obj1[k], 'state': 'unchanged'}
+
+    return diff
 
 
 def generate_diff(file1, file2):
