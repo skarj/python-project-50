@@ -1,6 +1,6 @@
 import argparse
 import os
-from gendiff.parser import compare_objects, get_parser
+from gendiff.parser import get_parser, create_diff, format_stylish
 
 SUPPORTED_FORMATS = ['.json', '.yaml', '.yml']
 
@@ -31,4 +31,8 @@ def generate_diff(file1, file2):
     object1 = file1_parser(file1)
     object2 = file2_parser(file2)
 
-    return compare_objects(object1, object2)
+    diff = create_diff(object1, object2)
+    result = format_stylish(diff)
+
+    return '\n'.join(result)
+
