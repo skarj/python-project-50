@@ -35,4 +35,3 @@ def generate_diff(file1, file2):
     result = format_stylish(diff)
 
     return '\n'.join(result)
-

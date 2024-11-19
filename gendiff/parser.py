@@ -102,10 +102,3 @@ def format_stylish(diff, indent_size=4):
     result.append('}')
 
     return result
-
-
-def compare_objects(obj1, obj2):
-    diff = create_diff(obj1, obj2)
-    result = format_stylish(diff)
-
-    return '\n'.join(result)
