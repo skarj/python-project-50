@@ -2,7 +2,7 @@ import argparse
 import os
 import json
 import yaml
-from gendiff.formatter import format_stylish
+from gendiff.formatters.stylish import format_stylish
 
 SUPPORTED_FORMATS = ['.json', '.yaml', '.yml']
 
@@ -22,11 +22,13 @@ def get_parser(format):
 def get_args():
     parser = argparse.ArgumentParser(
         prog='gendiff',
-        description='Compares two configuration files and shows a difference'
+        description='Compares two configuration files and shows a difference',
+        formatter_class=argparse.ArgumentDefaultsHelpFormatter
     )
     parser.add_argument('first_file')
     parser.add_argument('second_file')
-    parser.add_argument('-f', '--format', help='set format of output')
+    parser.add_argument('-f', '--format', default='stylish',
+                        help='set format of output', choices=['stylish', 'plain'])
 
     return parser.parse_args()
 
@@ -73,6 +75,8 @@ def generate_diff(file1, file2, format_name='stylish'):
     object2 = file2_parser(file2)
 
     diff = create_diff(object1, object2)
+
+
     if format_name == 'stylish':
         result = format_stylish(diff)
 
