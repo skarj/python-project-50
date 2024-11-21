@@ -82,6 +82,14 @@ def test_compare_complex_json_stylish(input_files_complex, result_stylish_comple
     ) == result_stylish_complex
 
 
+def test_compare_complex_json_plain(input_files_complex, result_plain_complex):
+    assert generate_diff(
+        input_files_complex['json1'],
+        input_files_complex['json2'],
+        format_name='plain'
+    ) == result_plain_complex
+
+
 def test_compare_complex_yaml_stylish(input_files_complex, result_stylish_complex):
     assert generate_diff(
         input_files_complex['yaml1'],
