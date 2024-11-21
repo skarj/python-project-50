@@ -2,21 +2,9 @@ import argparse
 import os
 import json
 import yaml
-from gendiff.formatters import stylish, plain
-
-SUPPORTED_FORMATS = ['.json', '.yaml', '.yml']
-
-
-def get_parser(format):
-    def loader(file):
-        if format in ['.yaml', 'yml']:
-            obj = yaml.load(open(file), Loader=yaml.Loader)
-        else:
-            obj = json.load(open(file))
-
-        return obj
-
-    return loader
+from gendiff.formatters.stylish import format_stylish
+from gendiff.formatters.plain import format_plain
+from gendiff.formatters.json import format_json
 
 
 def get_args():
@@ -28,7 +16,7 @@ def get_args():
     parser.add_argument('first_file')
     parser.add_argument('second_file')
     parser.add_argument('-f', '--format', default='stylish',
-                        help='set format of output', choices=['stylish', 'plain'])
+                        help='set format of output', choices=['stylish', 'plain', 'json'])
 
     return parser.parse_args()
 
@@ -60,26 +48,30 @@ def create_diff(obj1, obj2):
     return diff
 
 
+def load_file(file, file_format):
+    with open(file, 'r') as f:
+        return yaml.safe_load(f) if file_format in ['.yaml', '.yml'] else json.load(f)
+
+
 def generate_diff(file1, file2, format_name='stylish'):
     _, file1_format = os.path.splitext(file1)
     _, file2_format = os.path.splitext(file2)
 
     for format in [file1_format, file2_format]:
-        if format not in SUPPORTED_FORMATS:
+        if format not in ['.json', '.yaml', '.yml']:
             return f'Error! Unsupported format type: {format}'
 
-    file1_parser = get_parser(file1_format)
-    file2_parser = get_parser(file2_format)
-
-    object1 = file1_parser(file1)
-    object2 = file2_parser(file2)
+    object1 = load_file(file1, file1_format)
+    object2 = load_file(file2, file2_format)
 
     diff = create_diff(object1, object2)
 
-    # improve
-    if format_name == 'stylish':
-        result = stylish.format_stylish(diff)
-    elif format_name == 'plain':
-        result = plain.format_plain(diff)
+    formatters = {
+        'stylish': format_stylish,
+        'plain': format_plain,
+        'json': format_json
+    }
+
+    result = formatters[format_name](diff)
 
     return '\n'.join(result)
