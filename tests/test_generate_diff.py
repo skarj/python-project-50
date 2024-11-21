@@ -40,6 +40,12 @@ def _result_stylish_complex():
         return result.read().strip()
 
 
+@pytest.fixture(name='result_plain_complex')
+def _result_plain_complex():
+    with open('tests/fixtures/complex_plain_result') as result:
+        return result.read().strip()
+
+
 def test_compare_simple_json_plain(input_files_simple, result_plain_simple):
     assert generate_diff(
         input_files_simple['json1'],
