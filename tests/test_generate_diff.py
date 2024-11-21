@@ -41,28 +41,50 @@ def _result_stylish_complex():
 
 
 def test_compare_simple_json_plain(input_files_simple, result_plain_simple):
-    assert generate_diff(input_files_simple['json1'], input_files_simple['json2'], format_name='plain') == result_plain_simple
+    assert generate_diff(
+        input_files_simple['json1'],
+        input_files_simple['json2'],
+        format_name='plain'
+    ) == result_plain_simple
 
 
 def test_compare_simple_json_stylish(input_files_simple, result_stylish_simple):
-    assert generate_diff(input_files_simple['json1'], input_files_simple['json2']) == result_stylish_simple
+    assert generate_diff(
+        input_files_simple['json1'],
+        input_files_simple['json2']
+    ) == result_stylish_simple
 
 
 def test_compare_simple_yaml_stylish(input_files_simple, result_stylish_simple):
-    assert generate_diff(input_files_simple['yaml1'], input_files_simple['yaml2']) == result_stylish_simple
+    assert generate_diff(
+        input_files_simple['yaml1'],
+        input_files_simple['yaml2']
+    ) == result_stylish_simple
 
 
 def test_compare_simple_json_yaml_stylish(input_files_simple, result_stylish_simple):
-    assert generate_diff(input_files_simple['yaml1'], input_files_simple['json2']) == result_stylish_simple
+    assert generate_diff(
+        input_files_simple['yaml1'],
+        input_files_simple['json2']
+    ) == result_stylish_simple
 
 
 def test_compare_complex_json_stylish(input_files_complex, result_stylish_complex):
-    assert generate_diff(input_files_complex['json1'], input_files_complex['json2']) == result_stylish_complex
+    assert generate_diff(
+        input_files_complex['json1'],
+        input_files_complex['json2']
+    ) == result_stylish_complex
 
 
 def test_compare_complex_yaml_stylish(input_files_complex, result_stylish_complex):
-    assert generate_diff(input_files_complex['yaml1'], input_files_complex['yaml2']) == result_stylish_complex
+    assert generate_diff(
+        input_files_complex['yaml1'],
+        input_files_complex['yaml2']
+    ) == result_stylish_complex
 
 
 def test_unsupported_file_format(input_files_simple):
-    assert generate_diff(input_files_simple['yaml1'], 'tests/fixtures/file2.xml') == 'Error! Unsupported format type: .xml'
+    assert generate_diff(
+        input_files_simple['yaml1'],
+        'tests/fixtures/file2.xml'
+    ) == 'Error! Unsupported format type: .xml'
