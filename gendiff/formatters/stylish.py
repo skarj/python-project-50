@@ -33,10 +33,10 @@ def format_stylish(diff, indent_size=4):
                 result.append(f'{indent}  }}')
             else:
                 diff_symbol = ' ' if v['state'] == 'unchanged' else '-' \
-                    if v['state'] == 'removed' or v['state'] == 'changed' else '+'
+                    if v['state'] == 'removed' or v['state'] == 'updated' else '+'
                 result.extend(render_stylish({k: v['value']}, depth, diff_symbol))
 
-                if v['state'] == 'changed':
+                if v['state'] == 'updated':
                     result.extend(render_stylish({k: v['new_value']}, depth, '+'))
 
         return result

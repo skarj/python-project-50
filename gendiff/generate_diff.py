@@ -2,7 +2,7 @@ import argparse
 import os
 import json
 import yaml
-from gendiff.formatters.stylish import format_stylish
+from gendiff.formatters import stylish, plain
 
 SUPPORTED_FORMATS = ['.json', '.yaml', '.yml']
 
@@ -51,7 +51,7 @@ def create_diff(obj1, obj2):
             else:
                 diff[k] = {
                     'value': obj1[k],
-                    'state': 'changed',
+                    'state': 'updated',
                     'new_value': obj2[k]
                 }
         else:
@@ -76,7 +76,10 @@ def generate_diff(file1, file2, format_name='stylish'):
 
     diff = create_diff(object1, object2)
 
+    # improve
     if format_name == 'stylish':
-        result = format_stylish(diff)
+        result = stylish.format_stylish(diff)
+    elif format_name == 'plain':
+        result = plain.format_plain(diff)
 
     return '\n'.join(result)

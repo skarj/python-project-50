@@ -22,36 +22,46 @@ def _input_files_complex():
     }
 
 
-@pytest.fixture(name='result_simple')
-def _result_simple():
-    with open('tests/fixtures/simple_result') as result:
+@pytest.fixture(name='result_stylish_simple')
+def _result_stylish_simple():
+    with open('tests/fixtures/simple_stylish_result') as result:
         return result.read().strip()
 
 
-@pytest.fixture(name='result_complex')
-def _result_complex():
-    with open('tests/fixtures/complex_result') as result:
+@pytest.fixture(name='result_plain_simple')
+def _result_plain_simple():
+    with open('tests/fixtures/simple_plain_result') as result:
         return result.read().strip()
 
 
-def test_compare_correct_json_files(input_files_simple, result_simple):
-    assert generate_diff(input_files_simple['json1'], input_files_simple['json2']) == result_simple
+@pytest.fixture(name='result_stylish_complex')
+def _result_stylish_complex():
+    with open('tests/fixtures/complex_stylish_result') as result:
+        return result.read().strip()
 
 
-def test_compare_correct_json_files_complex(input_files_complex, result_complex):
-    assert generate_diff(input_files_complex['json1'], input_files_complex['json2']) == result_complex
+def test_compare_simple_json_plain(input_files_simple, result_plain_simple):
+    assert generate_diff(input_files_simple['json1'], input_files_simple['json2'], format_name='plain') == result_plain_simple
 
 
-def test_compare_correct_yaml_files(input_files_simple, result_simple):
-    assert generate_diff(input_files_simple['yaml1'], input_files_simple['yaml2']) == result_simple
+def test_compare_simple_json_stylish(input_files_simple, result_stylish_simple):
+    assert generate_diff(input_files_simple['json1'], input_files_simple['json2']) == result_stylish_simple
 
 
-def test_compare_correct_yaml_files_complex(input_files_complex, result_complex):
-    assert generate_diff(input_files_complex['yaml1'], input_files_complex['yaml2']) == result_complex
+def test_compare_simple_yaml_stylish(input_files_simple, result_stylish_simple):
+    assert generate_diff(input_files_simple['yaml1'], input_files_simple['yaml2']) == result_stylish_simple
 
 
-def test_compare_correct_yam_json_files(input_files_simple, result_simple):
-    assert generate_diff(input_files_simple['yaml1'], input_files_simple['json2']) == result_simple
+def test_compare_simple_json_yaml_stylish(input_files_simple, result_stylish_simple):
+    assert generate_diff(input_files_simple['yaml1'], input_files_simple['json2']) == result_stylish_simple
+
+
+def test_compare_complex_json_stylish(input_files_complex, result_stylish_complex):
+    assert generate_diff(input_files_complex['json1'], input_files_complex['json2']) == result_stylish_complex
+
+
+def test_compare_complex_yaml_stylish(input_files_complex, result_stylish_complex):
+    assert generate_diff(input_files_complex['yaml1'], input_files_complex['yaml2']) == result_stylish_complex
 
 
 def test_unsupported_file_format(input_files_simple):
