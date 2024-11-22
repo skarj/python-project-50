@@ -9,9 +9,9 @@ def render_stylish(json, depth=1, diff_symbol=' ', indent_symbol=' ', indent_siz
             else:
                 if isinstance(v, bool):
                     v = str(v).lower()
-                if v is None:
+                elif v is None:
                     v = 'null'
-                result.append(f'{indent}{diff_symbol} {k}: {v}'.rstrip())
+                result.append(f'{indent}{diff_symbol} {k}: {v}')
         return result
 
     result = []
