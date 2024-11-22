@@ -18,7 +18,7 @@ def format_plain(data):
 
             if 'children' in v:
                 format(v['children'], result, path)
-            else:
+            elif 'state' in v:
                 value = format_value(v['value'])
                 new_value = format_value(v.get('new_value'))
 

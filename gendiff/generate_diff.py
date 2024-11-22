@@ -22,29 +22,20 @@ def get_args():
 
 
 def create_diff(obj1, obj2):
-    removed = obj1.keys() - obj2.keys()
-    added = obj2.keys() - obj1.keys()
-    same = obj2.keys() & obj1.keys()
-    all = removed | added | same
+    all_keys = obj1.keys() | obj2.keys()
 
     diff = {}
-    for k in all:
-        if k in removed:
+    for k in all_keys:
+        if k not in obj2:
             diff[k] = {'value': obj1[k], 'state': 'removed'}
-        elif k in added:
+        elif k not in obj1:
             diff[k] = {'value': obj2[k], 'state': 'added'}
-        elif k in same and obj1[k] != obj2[k]:
-            if isinstance(obj1[k], dict) and isinstance(obj2[k], dict):
-                diff[k] = {'children': create_diff(obj1[k], obj2[k])}
-            else:
-                diff[k] = {
-                    'value': obj1[k],
-                    'state': 'updated',
-                    'new_value': obj2[k]
-                }
+        elif isinstance(obj1[k], dict) and isinstance(obj2[k], dict):
+            diff[k] = {'children': create_diff(obj1[k], obj2[k])}
+        elif obj1[k] != obj2[k]:
+            diff[k] = {'value': obj1[k], 'state': 'updated', 'new_value': obj2[k]}
         else:
-            diff[k] = {'value': obj1[k], 'state': 'unchanged'}
-
+            diff[k] = obj1[k]
     return diff
 
 
