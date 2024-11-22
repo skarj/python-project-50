@@ -17,6 +17,9 @@ Compare two configuration files and show a difference
 ## Plain Output Format Format
 [![asciicast](https://asciinema.org/a/QyP6qqGnw9RR72FpJyL6G26eI.svg)](https://asciinema.org/a/QyP6qqGnw9RR72FpJyL6G26eI)
 
+## JSON Output
+[![asciicast](https://asciinema.org/a/YLUnVgV24LdRLvAp7BR3qHFzc.svg)](https://asciinema.org/a/YLUnVgV24LdRLvAp7BR3qHFzc)
+
 ## Requirements
 
 Python 3.10+
