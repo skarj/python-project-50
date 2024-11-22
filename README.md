@@ -5,8 +5,40 @@
 # Gendiff
 Compare two configuration files and show a difference
 
-# Flat Diff for JSON files
+## Flat Diff for JSON files
 TODO: add demo
 
-# Flat Diff for YAML files
+## Flat Diff for YAML files
 TODO: add demo
+
+## Requirements
+
+Python 3.10+
+
+## Installation
+
+```bash
+git clone https://github.com/skarj/python-project-50.git
+cd python-project-50
+make install # Install dependencies
+make build # Buld package
+make package-install # Install package locally
+```
+
+## Running
+```bash
+$ poetry run gendiff -h
+
+usage: gendiff [-h] [-f {stylish,plain,json}] first_file second_file
+
+Compares two configuration files and shows a difference
+
+positional arguments:
+  first_file
+  second_file
+
+options:
+  -h, --help            show this help message and exit
+  -f {stylish,plain,json}, --format {stylish,plain,json}
+                        set format of output (default: stylish)
+```
