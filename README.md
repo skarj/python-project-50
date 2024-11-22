@@ -5,11 +5,14 @@
 # Gendiff
 Compare two configuration files and show a difference
 
-## Comparing Flat JSON files
+## Comparing Flat JSON Structures
 [![asciicast](https://asciinema.org/a/SsBKw8ltMnzvloEFNNaA1amAk.svg)](https://asciinema.org/a/SsBKw8ltMnzvloEFNNaA1amAk)
 
-## Comparing Flat YAML files
+## Comparing Flat YAML Structures
 [![asciicast](https://asciinema.org/a/odiQTC7zoItiOWDkEnT1cnGKf.svg)](https://asciinema.org/a/odiQTC7zoItiOWDkEnT1cnGKf)
+
+## Comparing Nested Structures
+[![asciicast](https://asciinema.org/a/J3fSU7N5qn1s19mX9qN6nuUQc.svg)](https://asciinema.org/a/J3fSU7N5qn1s19mX9qN6nuUQc)
 
 ## Requirements
 
