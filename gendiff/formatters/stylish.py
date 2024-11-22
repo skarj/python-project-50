@@ -1,3 +1,5 @@
+from gendiff.config import INDENT
+
 def render_stylish(json, depth=1, diff_symbol=' ', indent_symbol=' ', indent_size=4):
     def parse(data, result, depth, diff_symbol):
         indent = indent_symbol * (indent_size * depth - 2)
@@ -20,9 +22,9 @@ def render_stylish(json, depth=1, diff_symbol=' ', indent_symbol=' ', indent_siz
     return result
 
 
-def format_stylish(diff, indent_size=4):
+def format_stylish(diff):
     def format(data, result, depth=1):
-        indent = ' ' * (indent_size * depth - 2)
+        indent = ' ' * (INDENT * depth - 2)
 
         for k, v in sorted(data.items()):
             if 'children' in v:

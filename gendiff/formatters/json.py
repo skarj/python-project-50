@@ -1,4 +1,5 @@
 import json
+from gendiff.config import INDENT
 
 
 def format_json(data):
@@ -34,4 +35,4 @@ def format_json(data):
 
         return result
 
-    return json.dumps(format(data), indent=4)
+    return json.dumps(format(data), indent=INDENT)
