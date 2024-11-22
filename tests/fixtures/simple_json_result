@@ -1,0 +1,21 @@
+[
+    {
+        "path": "follow",
+        "state": "removed"
+    },
+    {
+        "path": "proxy",
+        "state": "removed"
+    },
+    {
+        "path": "timeout",
+        "state": "updated",
+        "value": 50,
+        "new_value": 20
+    },
+    {
+        "path": "verbose",
+        "state": "added",
+        "value": true
+    }
+]

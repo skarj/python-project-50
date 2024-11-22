@@ -34,6 +34,12 @@ def _result_plain_simple():
         return result.read().strip()
 
 
+@pytest.fixture(name='result_json_simple')
+def _result_json_simple():
+    with open('tests/fixtures/simple_json_result') as result:
+        return result.read().strip()
+
+
 @pytest.fixture(name='result_stylish_complex')
 def _result_stylish_complex():
     with open('tests/fixtures/complex_stylish_result') as result:
@@ -46,7 +52,13 @@ def _result_plain_complex():
         return result.read().strip()
 
 
-def test_compare_simple_json_plain(input_files_simple, result_plain_simple):
+@pytest.fixture(name='result_json_complex')
+def _result_json_complex():
+    with open('tests/fixtures/complex_json_result') as result:
+        return result.read().strip()
+
+
+def test_simple_json_plain(input_files_simple, result_plain_simple):
     assert generate_diff(
         input_files_simple['json1'],
         input_files_simple['json2'],
@@ -54,35 +66,36 @@ def test_compare_simple_json_plain(input_files_simple, result_plain_simple):
     ) == result_plain_simple
 
 
-def test_compare_simple_json_stylish(input_files_simple, result_stylish_simple):
+def test_simple_json_stylish(input_files_simple, result_stylish_simple):
     assert generate_diff(
         input_files_simple['json1'],
         input_files_simple['json2']
     ) == result_stylish_simple
 
 
-def test_compare_simple_yaml_stylish(input_files_simple, result_stylish_simple):
+def test_simple_yaml_stylish(input_files_simple, result_stylish_simple):
     assert generate_diff(
         input_files_simple['yaml1'],
         input_files_simple['yaml2']
     ) == result_stylish_simple
 
 
-def test_compare_simple_json_yaml_stylish(input_files_simple, result_stylish_simple):
+def test_simple_json_json(input_files_simple, result_json_simple):
     assert generate_diff(
-        input_files_simple['yaml1'],
-        input_files_simple['json2']
-    ) == result_stylish_simple
+        input_files_simple['json1'],
+        input_files_simple['json2'],
+        format_name='json'
+    ) == result_json_simple
 
 
-def test_compare_complex_json_stylish(input_files_complex, result_stylish_complex):
+def test_complex_json_stylish(input_files_complex, result_stylish_complex):
     assert generate_diff(
         input_files_complex['json1'],
         input_files_complex['json2']
     ) == result_stylish_complex
 
 
-def test_compare_complex_json_plain(input_files_complex, result_plain_complex):
+def test_complex_json_plain(input_files_complex, result_plain_complex):
     assert generate_diff(
         input_files_complex['json1'],
         input_files_complex['json2'],
@@ -90,10 +103,25 @@ def test_compare_complex_json_plain(input_files_complex, result_plain_complex):
     ) == result_plain_complex
 
 
-def test_compare_complex_yaml_stylish(input_files_complex, result_stylish_complex):
+def test_complex_yaml_stylish(input_files_complex, result_stylish_complex):
     assert generate_diff(
         input_files_complex['yaml1'],
         input_files_complex['yaml2']
+    ) == result_stylish_complex
+
+
+def test_simple_json_json(input_files_complex, result_json_complex):
+    assert generate_diff(
+        input_files_complex['json1'],
+        input_files_complex['json2'],
+        format_name='json'
+    ) == result_json_complex
+
+
+def test_complex_json_yaml_stylish(input_files_complex, result_stylish_complex):
+    assert generate_diff(
+        input_files_complex['yaml1'],
+        input_files_complex['json2']
     ) == result_stylish_complex
 
 
