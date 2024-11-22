@@ -6,7 +6,7 @@
 Compare two configuration files and show a difference
 
 ## Comparing Flat JSON files
-[![asciicast](https://asciinema.org/a/LR3a2JlcnZLaDPjlqMwOeszsl.svg)](https://asciinema.org/a/LR3a2JlcnZLaDPjlqMwOeszsl)
+[![asciicast](https://asciinema.org/a/SsBKw8ltMnzvloEFNNaA1amAk.svg)](https://asciinema.org/a/SsBKw8ltMnzvloEFNNaA1amAk)
 
 ## Comparing Flat YAML files
 [![asciicast](https://asciinema.org/a/odiQTC7zoItiOWDkEnT1cnGKf.svg)](https://asciinema.org/a/odiQTC7zoItiOWDkEnT1cnGKf)
