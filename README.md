@@ -5,11 +5,11 @@
 # Gendiff
 Compare two configuration files and show a difference
 
-## Flat Diff for JSON files
-TODO: add demo
+## Comparing Flat JSON files
+[![asciicast](https://asciinema.org/a/LR3a2JlcnZLaDPjlqMwOeszsl.svg)](https://asciinema.org/a/LR3a2JlcnZLaDPjlqMwOeszsl)
 
-## Flat Diff for YAML files
-TODO: add demo
+## Comparing Flat YAML files
+[![asciicast](https://asciinema.org/a/odiQTC7zoItiOWDkEnT1cnGKf.svg)](https://asciinema.org/a/odiQTC7zoItiOWDkEnT1cnGKf)
 
 ## Requirements
 
