@@ -2,6 +2,7 @@ import argparse
 import os
 import json
 import yaml
+
 from gendiff.formatters.stylish import format_stylish
 from gendiff.formatters.plain import format_plain
 from gendiff.formatters.json import format_json
@@ -64,5 +65,6 @@ def generate_diff(file1, file2, format_name='stylish'):
     }
 
     result = formatters[format_name](diff)
+    string = '\n'.join(result) if format_name != 'json' else result
 
-    return '\n'.join(result)
+    return string
