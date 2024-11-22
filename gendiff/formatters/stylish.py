@@ -1,8 +1,8 @@
 from gendiff.config import INDENT
 
-def render_stylish(json, depth=1, diff_symbol=' ', indent_symbol=' ', indent_size=4):
+def render_stylish(json, depth=1, diff_symbol=' ', indent_size=4):
     def parse(data, result, depth, diff_symbol):
-        indent = indent_symbol * (indent_size * depth - 2)
+        indent = ' ' * (indent_size * depth - 2)
         for k, v in data.items():
             if isinstance(v, dict):
                 result.append(f'{indent}{diff_symbol} {k}: {{')
