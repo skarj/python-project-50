@@ -110,7 +110,7 @@ def test_complex_yaml_stylish(input_files_complex, result_stylish_complex):
     ) == result_stylish_complex
 
 
-def test_simple_json_json(input_files_complex, result_json_complex):
+def test_complex_json_json(input_files_complex, result_json_complex):
     assert generate_diff(
         input_files_complex['json1'],
         input_files_complex['json2'],
