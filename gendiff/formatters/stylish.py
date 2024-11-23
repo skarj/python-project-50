@@ -36,7 +36,7 @@ def format_stylish(diff):
                 if v['state'] == 'updated':
                     result.extend(render_stylish({k: v['new_value']}, depth=depth, diff_symbol='+'))
             else:
-                result.extend(render_stylish({k: v}, depth=depth, diff_symbol=' '))
+                result.extend(render_stylish({k: v}, depth=depth))
 
         return result
 
