@@ -12,12 +12,12 @@ def normalize(value):
 
 
 def format_plain(data):
-    def format(data, result=[], current_path=''):
+    def walk(data, result=[], current_path=''):
         for k, v in sorted(data.items()):
             path = f"{current_path}.{k}" if current_path else k
 
             if 'children' in v:
-                format(v['children'], result, path)
+                walk(v['children'], result, path)
             elif 'state' in v:
                 value = normalize(v['value'])
                 new_value = normalize(v.get('new_value'))
@@ -32,4 +32,4 @@ def format_plain(data):
 
         return result
 
-    return format(data)
+    return walk(data)
