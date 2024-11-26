@@ -1,4 +1,4 @@
-def normalize(value):
+def stringify(value):
     if isinstance(value, bool):
         return str(value).lower()
     elif isinstance(value, dict):
@@ -19,8 +19,8 @@ def format_plain(data):
             if 'children' in v:
                 walk(v['children'], result, path)
             elif 'state' in v:
-                value = normalize(v['value'])
-                new_value = normalize(v.get('new_value'))
+                value = stringify(v['value'])
+                new_value = stringify(v.get('new_value'))
 
                 state = v['state']
                 if state == 'removed':
