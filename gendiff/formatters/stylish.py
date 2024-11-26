@@ -10,9 +10,12 @@ def stringify(data, result=None, depth=1, diff_symbol=' '):
             result.append(f'{indent}{diff_symbol} {key}: {{')
             stringify(node, result, depth + 1, ' ')
             result.append(f'{indent}  }}')
+        elif isinstance(node, bool):
+            result.append(f'{indent}{diff_symbol} {key}: {str(node).lower()}')
+        elif node is None:
+            result.append(f'{indent}{diff_symbol} {key}: null')
         else:
-            node_str = str(node).lower() if isinstance(node, bool) else 'null' if node is None else node
-            result.append(f'{indent}{diff_symbol} {key}: {node_str}')
+            result.append(f'{indent}{diff_symbol} {key}: {node}')
 
     return result
 
