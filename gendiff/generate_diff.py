@@ -38,10 +38,10 @@ def generate_diff(file1, file2, format_name='stylish'):
         if format not in ['.json', '.yaml', '.yml']:
             return f'Error! Unsupported format type: {format}'
 
-    object1 = load_file(file1, file1_format)
-    object2 = load_file(file2, file2_format)
+    content1 = load_file(file1, file1_format)
+    content2 = load_file(file2, file2_format)
 
-    diff = create_diff(object1, object2)
+    diff = create_diff(content1, content2)
 
     formatters = {
         'stylish': format_stylish,
