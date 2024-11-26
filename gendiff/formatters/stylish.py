@@ -33,7 +33,7 @@ def format_stylish(diff):
                 format(node['children'], result, depth + 1)
                 result.append(f'{indent}  }}')
             elif 'state' in node:
-                diff_symbol = '-' if node['state'] == REMOVED or node['state'] == UPDATED else '+'
+                diff_symbol = '-' if node['state'] in {REMOVED, UPDATED} else '+'
                 result.extend(stringify({k: node['value']}, depth=depth, diff_symbol=diff_symbol))
 
                 if node['state'] == UPDATED:

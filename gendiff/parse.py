@@ -9,9 +9,9 @@ def load_file(file):
 
 def parse_file(file_path):
     _, file_extention = os.path.splitext(file_path)
-    if file_extention not in ['.json', '.yaml', '.yml']:
+    if file_extention not in {'.json', '.yaml', '.yml'}:
         return f'Error! Unsupported format type: {file_extention}'
-    elif file_extention in ['.yaml', '.yml']:
+    elif file_extention in {'.yaml', '.yml'}:
         return yaml.safe_load(load_file(file_path))
     else:
         return json.load(load_file(file_path))
