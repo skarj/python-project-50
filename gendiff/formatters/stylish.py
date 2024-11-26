@@ -1,14 +1,14 @@
 from gendiff.config import INDENT
 
 
-def render_stylish(data, result=None, depth=1, diff_symbol=' '):
+def stringify(data, result=None, depth=1, diff_symbol=' '):
     result = result or []
 
     indent = ' ' * (INDENT * depth - 2)
     for key, node in data.items():
         if isinstance(node, dict):
             result.append(f'{indent}{diff_symbol} {key}: {{')
-            render_stylish(node, result, depth + 1, ' ')
+            stringify(node, result, depth + 1, ' ')
             result.append(f'{indent}  }}')
         else:
             if isinstance(node, bool):
@@ -31,12 +31,12 @@ def format_stylish(diff):
                 result.append(f'{indent}  }}')
             elif 'state' in node:
                 diff_symbol = '-' if node['state'] == 'removed' or node['state'] == 'updated' else '+'
-                result.extend(render_stylish({k: node['value']}, depth=depth, diff_symbol=diff_symbol))
+                result.extend(stringify({k: node['value']}, depth=depth, diff_symbol=diff_symbol))
 
                 if node['state'] == 'updated':
-                    result.extend(render_stylish({k: node['new_value']}, depth=depth, diff_symbol='+'))
+                    result.extend(stringify({k: node['new_value']}, depth=depth, diff_symbol='+'))
             else:
-                result.extend(render_stylish({k: node}, depth=depth))
+                result.extend(stringify({k: node}, depth=depth))
 
         return result
 
