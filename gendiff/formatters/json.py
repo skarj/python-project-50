@@ -1,5 +1,7 @@
 import json
-from gendiff.config import INDENT
+from gendiff.states import ADDED, UPDATED, REMOVED
+
+INDENT = 4
 
 
 def format_json(data):
@@ -14,18 +16,18 @@ def format_json(data):
                 new_value = node.get('new_value')
 
                 state = node['state']
-                if state == 'removed':
+                if state == REMOVED:
                     result.append({
                         "path": path,
                         "state": state
                     })
-                elif state == 'added':
+                elif state == ADDED:
                     result.append({
                         "path": path,
                         "state": state,
                         "value": value
                     })
-                elif state == 'updated':
+                elif state == UPDATED:
                     result.append({
                         "path": path,
                         "state": state,

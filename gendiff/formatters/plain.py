@@ -1,3 +1,6 @@
+from gendiff.states import ADDED, UPDATED, REMOVED
+
+
 def stringify(value):
     if isinstance(value, bool):
         return str(value).lower()
@@ -23,11 +26,11 @@ def format_plain(data):
                 new_value = stringify(node.get('new_value'))
 
                 state = node['state']
-                if state == 'removed':
+                if state == REMOVED:
                     result.append(f"Property '{path}' was removed")
-                elif state == 'added':
+                elif state == ADDED:
                     result.append(f"Property '{path}' was added with value: {value}")
-                elif state == 'updated':
+                elif state == UPDATED:
                     result.append(f"Property '{path}' was updated. From {value} to {new_value}")
 
         return result

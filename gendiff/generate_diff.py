@@ -5,6 +5,7 @@ import yaml
 from gendiff.formatters.stylish import format_stylish
 from gendiff.formatters.plain import format_plain
 from gendiff.formatters.json import format_json
+from gendiff.states import ADDED, UPDATED, REMOVED
 
 
 def create_diff(content1, content2):
@@ -13,13 +14,13 @@ def create_diff(content1, content2):
     diff = {}
     for key in all_keys:
         if key not in content2:
-            diff[key] = {'value': content1[key], 'state': 'removed'}
+            diff[key] = {'value': content1[key], 'state': REMOVED}
         elif key not in content1:
-            diff[key] = {'value': content2[key], 'state': 'added'}
+            diff[key] = {'value': content2[key], 'state': ADDED}
         elif isinstance(content1[key], dict) and isinstance(content2[key], dict):
             diff[key] = {'children': create_diff(content1[key], content2[key])}
         elif content1[key] != content2[key]:
-            diff[key] = {'value': content1[key], 'state': 'updated', 'new_value': content2[key]}
+            diff[key] = {'value': content1[key], 'state': UPDATED, 'new_value': content2[key]}
         else:
             diff[key] = content1[key]
     return diff
