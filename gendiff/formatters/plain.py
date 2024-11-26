@@ -32,4 +32,4 @@ def format_plain(data):
 
         return result
 
-    return walk(data)
+    return '\n'.join(walk(data))

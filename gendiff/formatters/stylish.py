@@ -44,4 +44,4 @@ def format_stylish(diff):
     result = format(diff, result)
     result.append('}')
 
-    return result
+    return '\n'.join(result)

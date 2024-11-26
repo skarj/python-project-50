@@ -49,7 +49,4 @@ def generate_diff(file1, file2, format_name='stylish'):
         'json': format_json
     }
 
-    result = formatters[format_name](diff)
-    string = '\n'.join(result) if format_name != 'json' else result
-
-    return string
+    return formatters[format_name](diff)
