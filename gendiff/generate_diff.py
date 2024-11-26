@@ -1,7 +1,4 @@
-import os
-import json
-import yaml
-
+from gendiff.parse import parse_file
 from gendiff.formatters.utils import get_formatter
 from gendiff.states import ADDED, UPDATED, REMOVED
 
@@ -24,21 +21,9 @@ def create_diff(content1, content2):
     return diff
 
 
-def load_file(file, file_format):
-    with open(file, 'r') as f:
-        return yaml.safe_load(f) if file_format in ['.yaml', '.yml'] else json.load(f)
-
-
-def generate_diff(file1, file2, format_name='stylish'):
-    _, file1_format = os.path.splitext(file1)
-    _, file2_format = os.path.splitext(file2)
-
-    for format in [file1_format, file2_format]:
-        if format not in ['.json', '.yaml', '.yml']:
-            return f'Error! Unsupported format type: {format}'
-
-    content1 = load_file(file1, file1_format)
-    content2 = load_file(file2, file2_format)
+def generate_diff(file_path1, file_path2, format_name='stylish'):
+    content1 = parse_file(file_path1)
+    content2 = parse_file(file_path2)
 
     diff = create_diff(content1, content2)
     formatter = get_formatter(format_name)

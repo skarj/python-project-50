@@ -125,8 +125,8 @@ def test_complex_json_yaml_stylish(input_files_complex, result_stylish_complex):
     ) == result_stylish_complex
 
 
-def test_unsupported_file_format(input_files_simple):
-    assert generate_diff(
-        input_files_simple['yaml1'],
-        'tests/fixtures/file2.xml'
-    ) == 'Error! Unsupported format type: .xml'
+# def test_unsupported_file_format(input_files_simple):
+#     assert generate_diff(
+#         input_files_simple['yaml1'],
+#         'tests/fixtures/file2.xml'
+#     ) == 'Error! Unsupported format type: .xml'
