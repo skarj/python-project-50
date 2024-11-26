@@ -3,19 +3,16 @@ from gendiff.config import INDENT
 
 def stringify(data, result=None, depth=1, diff_symbol=' '):
     result = result or []
-
     indent = ' ' * (INDENT * depth - 2)
+
     for key, node in data.items():
         if isinstance(node, dict):
             result.append(f'{indent}{diff_symbol} {key}: {{')
             stringify(node, result, depth + 1, ' ')
             result.append(f'{indent}  }}')
         else:
-            if isinstance(node, bool):
-                node = str(node).lower()
-            elif node is None:
-                node = 'null'
-            result.append(f'{indent}{diff_symbol} {key}: {node}')
+            node_str = str(node).lower() if isinstance(node, bool) else 'null' if node is None else node
+            result.append(f'{indent}{diff_symbol} {key}: {node_str}')
 
     return result
 
