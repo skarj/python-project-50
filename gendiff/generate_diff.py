@@ -7,21 +7,21 @@ from gendiff.formatters.plain import format_plain
 from gendiff.formatters.json import format_json
 
 
-def create_diff(obj1, obj2):
-    all_keys = obj1.keys() | obj2.keys()
+def create_diff(content1, content2):
+    all_keys = content1.keys() | content2.keys()
 
     diff = {}
     for k in all_keys:
-        if k not in obj2:
-            diff[k] = {'value': obj1[k], 'state': 'removed'}
-        elif k not in obj1:
-            diff[k] = {'value': obj2[k], 'state': 'added'}
-        elif isinstance(obj1[k], dict) and isinstance(obj2[k], dict):
-            diff[k] = {'children': create_diff(obj1[k], obj2[k])}
-        elif obj1[k] != obj2[k]:
-            diff[k] = {'value': obj1[k], 'state': 'updated', 'new_value': obj2[k]}
+        if k not in content2:
+            diff[k] = {'value': content1[k], 'state': 'removed'}
+        elif k not in content1:
+            diff[k] = {'value': content2[k], 'state': 'added'}
+        elif isinstance(content1[k], dict) and isinstance(content2[k], dict):
+            diff[k] = {'children': create_diff(content1[k], content2[k])}
+        elif content1[k] != content2[k]:
+            diff[k] = {'value': content1[k], 'state': 'updated', 'new_value': content2[k]}
         else:
-            diff[k] = obj1[k]
+            diff[k] = content1[k]
     return diff
 
 
