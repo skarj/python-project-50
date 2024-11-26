@@ -13,16 +13,16 @@ def stringify(value):
 
 def format_plain(data):
     def walk(data, result=[], current_path=''):
-        for k, v in sorted(data.items()):
-            path = f"{current_path}.{k}" if current_path else k
+        for key, node in sorted(data.items()):
+            path = f"{current_path}.{key}" if current_path else key
 
-            if 'children' in v:
-                walk(v['children'], result, path)
-            elif 'state' in v:
-                value = stringify(v['value'])
-                new_value = stringify(v.get('new_value'))
+            if 'children' in node:
+                walk(node['children'], result, path)
+            elif 'state' in node:
+                value = stringify(node['value'])
+                new_value = stringify(node.get('new_value'))
 
-                state = v['state']
+                state = node['state']
                 if state == 'removed':
                     result.append(f"Property '{path}' was removed")
                 elif state == 'added':

@@ -4,16 +4,16 @@ from gendiff.config import INDENT
 
 def format_json(data):
     def format(data, result=[], current_path=''):
-        for k, v in sorted(data.items()):
-            path = f"{current_path}.{k}" if current_path else k
+        for key, node in sorted(data.items()):
+            path = f"{current_path}.{key}" if current_path else key
 
-            if 'children' in v:
-                format(v['children'], result, path)
-            elif 'state' in v:
-                value = v['value']
-                new_value = v.get('new_value')
+            if 'children' in node:
+                format(node['children'], result, path)
+            elif 'state' in node:
+                value = node['value']
+                new_value = node.get('new_value')
 
-                state = v['state']
+                state = node['state']
                 if state == 'removed':
                     result.append({
                         "path": path,

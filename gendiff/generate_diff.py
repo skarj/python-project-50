@@ -11,17 +11,17 @@ def create_diff(content1, content2):
     all_keys = content1.keys() | content2.keys()
 
     diff = {}
-    for k in all_keys:
-        if k not in content2:
-            diff[k] = {'value': content1[k], 'state': 'removed'}
-        elif k not in content1:
-            diff[k] = {'value': content2[k], 'state': 'added'}
-        elif isinstance(content1[k], dict) and isinstance(content2[k], dict):
-            diff[k] = {'children': create_diff(content1[k], content2[k])}
-        elif content1[k] != content2[k]:
-            diff[k] = {'value': content1[k], 'state': 'updated', 'new_value': content2[k]}
+    for key in all_keys:
+        if key not in content2:
+            diff[key] = {'value': content1[key], 'state': 'removed'}
+        elif key not in content1:
+            diff[key] = {'value': content2[key], 'state': 'added'}
+        elif isinstance(content1[key], dict) and isinstance(content2[key], dict):
+            diff[key] = {'children': create_diff(content1[key], content2[key])}
+        elif content1[key] != content2[key]:
+            diff[key] = {'value': content1[key], 'state': 'updated', 'new_value': content2[key]}
         else:
-            diff[k] = content1[k]
+            diff[key] = content1[key]
     return diff
 
 
