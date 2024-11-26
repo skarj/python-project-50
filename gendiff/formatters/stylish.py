@@ -4,7 +4,8 @@ INDENT = 4
 
 
 def stringify(data, result=None, depth=1, diff_symbol=' '):
-    result = result or []
+    if result is None:
+        result = []
     indent = ' ' * (INDENT * depth - 2)
 
     for key, node in data.items():

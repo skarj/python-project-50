@@ -5,7 +5,10 @@ INDENT = 4
 
 
 def format_json(data):
-    def format(data, result=[], current_path=''):
+    def format(data, result=None, current_path=''):
+        if result is None:
+            result = []
+
         for key, node in sorted(data.items()):
             path = f"{current_path}.{key}" if current_path else key
 

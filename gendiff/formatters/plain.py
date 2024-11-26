@@ -15,7 +15,10 @@ def stringify(value):
 
 
 def format_plain(data):
-    def walk(data, result=[], current_path=''):
+    def walk(data, result=None, current_path=''):
+        if result is None:
+            result = []
+
         for key, node in sorted(data.items()):
             path = f"{current_path}.{key}" if current_path else key
 
