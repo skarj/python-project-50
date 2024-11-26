@@ -2,9 +2,7 @@ import os
 import json
 import yaml
 
-from gendiff.formatters.stylish import format_stylish
-from gendiff.formatters.plain import format_plain
-from gendiff.formatters.json import format_json
+from gendiff.formatters.utils import get_formatter
 from gendiff.states import ADDED, UPDATED, REMOVED
 
 
@@ -43,11 +41,6 @@ def generate_diff(file1, file2, format_name='stylish'):
     content2 = load_file(file2, file2_format)
 
     diff = create_diff(content1, content2)
+    formatter = get_formatter(format_name)
 
-    formatters = {
-        'stylish': format_stylish,
-        'plain': format_plain,
-        'json': format_json
-    }
-
-    return formatters[format_name](diff)
+    return formatter(diff)
