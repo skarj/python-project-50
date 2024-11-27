@@ -1,5 +1,4 @@
 import json
-from gendiff.states import ADDED, UPDATED, REMOVED
 
 INDENT = 4
 
