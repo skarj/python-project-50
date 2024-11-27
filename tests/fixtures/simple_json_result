@@ -3,7 +3,10 @@
         "state": "removed",
         "value": false
     },
-    "host": "hexlet.io",
+    "host": {
+        "state": "unchanged",
+        "value": "hexlet.io"
+    },
     "proxy": {
         "state": "removed",
         "value": "123.234.53.22"
