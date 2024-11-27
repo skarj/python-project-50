@@ -5,10 +5,7 @@
                 "state": "added",
                 "value": false
             },
-            "setting1": {
-                "state": "unchanged",
-                "value": "Value 1"
-            },
+            "setting1": "Value 1",
             "setting2": {
                 "state": "removed",
                 "value": 200
@@ -39,10 +36,7 @@
                             }
                         }
                     },
-                    "key": {
-                        "state": "unchanged",
-                        "value": "value"
-                    },
+                    "key": "value",
                     "ops": {
                         "state": "added",
                         "value": "vops"
@@ -58,10 +52,7 @@
                 "state": "updated",
                 "value": "bas"
             },
-            "foo": {
-                "state": "unchanged",
-                "value": "bar"
-            },
+            "foo": "bar",
             "nest": {
                 "new_value": "str",
                 "state": "updated",

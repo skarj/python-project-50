@@ -1,6 +1,6 @@
 from gendiff.parse import parse_file
 from gendiff.formatters.utils import get_formatter
-from gendiff.states import ADDED, UPDATED, REMOVED, UNCHANGED
+from gendiff.states import ADDED, UPDATED, REMOVED
 
 
 def create_diff(content1, content2):
@@ -17,7 +17,7 @@ def create_diff(content1, content2):
         elif content1[key] != content2[key]:
             diff[key] = {'value': content1[key], 'state': UPDATED, 'new_value': content2[key]}
         else:
-            diff[key] =  {'value': content1[key], 'state': UNCHANGED}
+            diff[key] = content1[key]
     return diff
 
 
