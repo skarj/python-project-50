@@ -1,21 +1,20 @@
-[
-    {
-        "path": "follow",
-        "state": "removed"
+{
+    "follow": {
+        "state": "removed",
+        "value": false
     },
-    {
-        "path": "proxy",
-        "state": "removed"
+    "host": "hexlet.io",
+    "proxy": {
+        "state": "removed",
+        "value": "123.234.53.22"
     },
-    {
-        "path": "timeout",
+    "timeout": {
+        "new_value": 20,
         "state": "updated",
-        "value": 50,
-        "new_value": 20
+        "value": 50
     },
-    {
-        "path": "verbose",
+    "verbose": {
         "state": "added",
         "value": true
     }
-]
+}

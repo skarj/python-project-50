@@ -1,62 +1,77 @@
-[
-    {
-        "path": "common.follow",
-        "state": "added",
-        "value": false
-    },
-    {
-        "path": "common.setting2",
-        "state": "removed"
-    },
-    {
-        "path": "common.setting3",
-        "state": "updated",
-        "value": true,
-        "new_value": null
-    },
-    {
-        "path": "common.setting4",
-        "state": "added",
-        "value": "blah blah"
-    },
-    {
-        "path": "common.setting5",
-        "state": "added",
-        "value": {
-            "key5": "value5"
+{
+    "common": {
+        "children": {
+            "follow": {
+                "state": "added",
+                "value": false
+            },
+            "setting1": "Value 1",
+            "setting2": {
+                "state": "removed",
+                "value": 200
+            },
+            "setting3": {
+                "new_value": null,
+                "state": "updated",
+                "value": true
+            },
+            "setting4": {
+                "state": "added",
+                "value": "blah blah"
+            },
+            "setting5": {
+                "state": "added",
+                "value": {
+                    "key5": "value5"
+                }
+            },
+            "setting6": {
+                "children": {
+                    "doge": {
+                        "children": {
+                            "wow": {
+                                "new_value": "so much",
+                                "state": "updated",
+                                "value": ""
+                            }
+                        }
+                    },
+                    "key": "value",
+                    "ops": {
+                        "state": "added",
+                        "value": "vops"
+                    }
+                }
+            }
         }
     },
-    {
-        "path": "common.setting6.doge.wow",
-        "state": "updated",
-        "value": "",
-        "new_value": "so much"
+    "group1": {
+        "children": {
+            "baz": {
+                "new_value": "bars",
+                "state": "updated",
+                "value": "bas"
+            },
+            "foo": "bar",
+            "nest": {
+                "new_value": "str",
+                "state": "updated",
+                "value": {
+                    "key": "value"
+                }
+            }
+        }
     },
-    {
-        "path": "common.setting6.ops",
-        "state": "added",
-        "value": "vops"
-    },
-    {
-        "path": "group1.baz",
-        "state": "updated",
-        "value": "bas",
-        "new_value": "bars"
-    },
-    {
-        "path": "group1.nest",
-        "state": "updated",
+    "group2": {
+        "state": "removed",
         "value": {
-            "key": "value"
-        },
-        "new_value": "str"
+            "abc": 12345,
+            "deep": {
+                "id": 45
+            }
+        }
     },
-    {
-        "path": "group2",
-        "state": "removed"
-    },
-    {
-        "path": "group3",
+    "group3": {
         "state": "added",
         "value": {
             "deep": {
@@ -67,4 +82,4 @@
             "fee": 100500
         }
     }
-]
+}
