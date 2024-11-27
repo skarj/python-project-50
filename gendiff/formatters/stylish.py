@@ -27,19 +27,19 @@ def format_stylish(diff):
     def format(data, result, depth=1):
         indent = ' ' * (INDENT * depth - 2)
 
-        for k, node in sorted(data.items()):
+        for key, node in sorted(data.items()):
             if 'children' in node:
-                result.append(f'{indent}  {k}: {{')
+                result.append(f'{indent}  {key}: {{')
                 format(node['children'], result, depth + 1)
                 result.append(f'{indent}  }}')
             elif 'state' in node:
                 diff_symbol = '-' if node['state'] in {REMOVED, UPDATED} else '+'
-                result.extend(stringify({k: node['value']}, depth=depth, diff_symbol=diff_symbol))
+                result.extend(stringify({key: node['value']}, depth=depth, diff_symbol=diff_symbol))
 
                 if node['state'] == UPDATED:
-                    result.extend(stringify({k: node['new_value']}, depth=depth, diff_symbol='+'))
+                    result.extend(stringify({key: node['new_value']}, depth=depth, diff_symbol='+'))
             else:
-                result.extend(stringify({k: node}, depth=depth))
+                result.extend(stringify({key: node}, depth=depth))
 
         return result
 
