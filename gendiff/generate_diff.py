@@ -1,4 +1,5 @@
 from gendiff.parse import parse_file
+from gendiff.utils import load_file, get_extention
 from gendiff.formatters.utils import get_formatter
 from gendiff.states import ADDED, UPDATED, REMOVED, UNCHANGED
 
@@ -26,8 +27,16 @@ def create_diff(content1, content2):
 
 
 def generate_diff(file_path1, file_path2, format_name='stylish'):
-    content1 = parse_file(file_path1)
-    content2 = parse_file(file_path2)
+    file1_extention = get_extention(file_path1)
+    file2_extention = get_extention(file_path2)
+
+    file1 = load_file(file_path1)
+    file2 = load_file(file_path2)
+
+    print(file1)
+
+    content1 = parse_file(file1, file1_extention)
+    content2 = parse_file(file2, file2_extention)
 
     diff = create_diff(content1, content2)
     formatter = get_formatter(format_name)
