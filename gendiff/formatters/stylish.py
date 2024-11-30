@@ -1,4 +1,4 @@
-from gendiff.states import UPDATED, REMOVED, UNCHANGED, ADDED
+from gendiff.states import ADDED, REMOVED, UPDATED, UNCHANGED
 
 INDENT = 4
 
@@ -28,11 +28,7 @@ def format_stylish(diff):
         indent = ' ' * (INDENT * depth - 2)
 
         for key, node in sorted(data.items()):
-            if 'children' in node:
-                result.append(f'{indent}  {key}: {{')
-                inner(node['children'], result, depth + 1)
-                result.append(f'{indent}  }}')
-            else:
+            if 'state' in node:
                 if node['state'] in {REMOVED, UPDATED}:
                     result.extend(stringify({key: node['value']}, depth=depth, diff_symbol='-'))
                 if node['state'] == UPDATED:
@@ -41,6 +37,10 @@ def format_stylish(diff):
                     result.extend(stringify({key: node['value']}, depth=depth, diff_symbol='+'))
                 elif node['state'] == UNCHANGED:
                     result.extend(stringify({key: node['value']}, depth=depth))
+            else:
+                result.append(f'{indent}  {key}: {{')
+                inner(node, result, depth + 1)
+                result.append(f'{indent}  }}')
 
         return result
 

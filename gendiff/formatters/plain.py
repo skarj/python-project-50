@@ -22,9 +22,7 @@ def format_plain(data):
         for key, node in sorted(data.items()):
             path = f"{current_path}.{key}" if current_path else key
 
-            if 'children' in node:
-                inner(node['children'], result, path)
-            elif 'state' in node:
+            if 'state' in node:
                 value = stringify(node['value'])
                 new_value = stringify(node.get('new_value'))
 
@@ -35,6 +33,8 @@ def format_plain(data):
                     result.append(f"Property '{path}' was added with value: {value}")
                 elif state == UPDATED:
                     result.append(f"Property '{path}' was updated. From {value} to {new_value}")
+            else:
+                inner(node, result, path)
 
         return result
 
