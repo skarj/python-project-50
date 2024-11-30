@@ -1,1 +1,1 @@
-{"timeout": {"value": 50, "state": "updated", "new_value": 20}, "host": "hexlet.io", "proxy": {"value": "123.234.53.22", "state": "removed"}, "follow": {"value": false, "state": "removed"}, "verbose": {"value": true, "state": "added"}}
+{"timeout": {"value": 50, "state": "updated", "new_value": 20}, "follow": {"value": false, "state": "removed"}, "verbose": {"value": true, "state": "added"}, "proxy": {"value": "123.234.53.22", "state": "removed"}, "host": {"value": "hexlet.io", "state": "unchanged"}}
