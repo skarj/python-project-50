@@ -15,10 +15,7 @@ def stringify(value):
 
 
 def format_plain(data):
-    def inner(data, result=None, current_path=''):
-        if result is None:
-            result = []
-
+    def inner(data, current_path=''):
         for key, node in sorted(data.items()):
             path = f"{current_path}.{key}" if current_path else key
 
@@ -34,8 +31,11 @@ def format_plain(data):
                     new_value = stringify(node['value'][1])
                     result.append(f"Property '{path}' was updated. From {value} to {new_value}")
             else:
-                inner(node, result, path)
+                inner(node, path)
 
         return result
 
-    return '\n'.join(inner(data))
+    result = []
+    result = inner(data)
+
+    return '\n'.join(result)
