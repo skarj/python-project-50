@@ -1,4 +1,5 @@
 import pytest
+import json
 from gendiff.generate_diff import generate_diff
 
 
@@ -81,11 +82,13 @@ def test_simple_yaml_stylish(input_files_simple, result_stylish_simple):
 
 
 def test_simple_json_json(input_files_simple, result_json_simple):
-    assert generate_diff(
+    diff = generate_diff(
         input_files_simple['json1'],
         input_files_simple['json2'],
         format_name='json'
-    ) == result_json_simple
+    )
+
+    assert json.loads(diff) == json.loads(result_json_simple)
 
 
 def test_complex_json_stylish(input_files_complex, result_stylish_complex):
@@ -111,11 +114,13 @@ def test_complex_yaml_stylish(input_files_complex, result_stylish_complex):
 
 
 def test_complex_json_json(input_files_complex, result_json_complex):
-    assert generate_diff(
+    diff = generate_diff(
         input_files_complex['json1'],
         input_files_complex['json2'],
         format_name='json'
-    ) == result_json_complex
+    )
+
+    assert json.loads(diff) == json.loads(result_json_complex)
 
 
 def test_complex_json_yaml_stylish(input_files_complex, result_stylish_complex):
