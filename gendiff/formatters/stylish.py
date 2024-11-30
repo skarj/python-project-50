@@ -24,13 +24,13 @@ def stringify(data, result=None, depth=1, diff_symbol=' '):
 
 
 def format_stylish(diff):
-    def format(data, result, depth=1):
+    def inner(data, result, depth=1):
         indent = ' ' * (INDENT * depth - 2)
 
         for key, node in sorted(data.items()):
             if 'children' in node:
                 result.append(f'{indent}  {key}: {{')
-                format(node['children'], result, depth + 1)
+                inner(node['children'], result, depth + 1)
                 result.append(f'{indent}  }}')
             elif 'state' in node:
                 diff_symbol = '-' if node['state'] in {REMOVED, UPDATED} else '+'
@@ -44,7 +44,7 @@ def format_stylish(diff):
         return result
 
     result = ['{']
-    result = format(diff, result)
+    result = inner(diff, result)
     result.append('}')
 
     return '\n'.join(result)

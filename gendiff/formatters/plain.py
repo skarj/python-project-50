@@ -15,7 +15,7 @@ def stringify(value):
 
 
 def format_plain(data):
-    def walk(data, result=None, current_path=''):
+    def inner(data, result=None, current_path=''):
         if result is None:
             result = []
 
@@ -23,7 +23,7 @@ def format_plain(data):
             path = f"{current_path}.{key}" if current_path else key
 
             if 'children' in node:
-                walk(node['children'], result, path)
+                inner(node['children'], result, path)
             elif 'state' in node:
                 value = stringify(node['value'])
                 new_value = stringify(node.get('new_value'))
@@ -38,4 +38,4 @@ def format_plain(data):
 
         return result
 
-    return '\n'.join(walk(data))
+    return '\n'.join(inner(data))
