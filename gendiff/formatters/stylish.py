@@ -29,11 +29,12 @@ def format_stylish(diff):
 
         for key, node in sorted(data.items()):
             if 'state' in node:
-                if node['state'] in {REMOVED, UPDATED}:
+                if node['state'] == REMOVED:
                     result.extend(stringify({key: node['value']}, depth=depth, diff_symbol='-'))
-                if node['state'] == UPDATED:
-                    result.extend(stringify({key: node['new_value']}, depth=depth, diff_symbol='+'))
-                if node['state'] == ADDED:
+                elif node['state'] == UPDATED:
+                    result.extend(stringify({key: node['value'][0]}, depth=depth, diff_symbol='-'))
+                    result.extend(stringify({key: node['value'][1]}, depth=depth, diff_symbol='+'))
+                elif node['state'] == ADDED:
                     result.extend(stringify({key: node['value']}, depth=depth, diff_symbol='+'))
                 elif node['state'] == UNCHANGED:
                     result.extend(stringify({key: node['value']}, depth=depth))

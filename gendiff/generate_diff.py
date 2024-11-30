@@ -19,7 +19,7 @@ def create_diff(content1, content2):
             if isinstance(content1[key], dict) and isinstance(content2[key], dict):
                 diff[key] = create_diff(content1[key], content2[key])
             elif content1[key] != content2[key]:
-                diff[key] = {'value': content1[key], 'state': UPDATED, 'new_value': content2[key]}
+                diff[key] = {'value': (content1[key], content2[key]), 'state': UPDATED}
             else:
                 diff[key] = {'value': content1[key], 'state': UNCHANGED}
     return diff
