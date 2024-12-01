@@ -1,4 +1,4 @@
-from gendiff.states import ADDED, REMOVED, UPDATED, UNCHANGED
+from gendiff.states import ADDED, REMOVED, UPDATED
 
 INDENT = 4
 
@@ -8,8 +8,7 @@ def stringify(value):
         return str(value).lower()
     elif value is None:
         return 'null'
-    else:
-        return value
+    return value
 
 
 def format_stylish(diff):
@@ -29,7 +28,7 @@ def format_stylish(diff):
                         value = value[0]
                     elif node['state'] == ADDED:
                         diff_symbol = '+'
-                    elif node['state'] == UNCHANGED:
+                    else:
                         diff_symbol = ' '
 
                     if isinstance(value, dict):
@@ -38,6 +37,7 @@ def format_stylish(diff):
                         result.append(f'{indent}  }}')
                     else:
                         result.append(f'{indent}{diff_symbol} {key}: {stringify(value)}')
+
                     if node['state'] == UPDATED:
                         result.append(f'{indent}+ {key}: {stringify(new_value)}')
                 else:
