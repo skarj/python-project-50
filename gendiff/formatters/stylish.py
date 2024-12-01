@@ -3,27 +3,7 @@ from gendiff.states import ADDED, REMOVED, UPDATED, UNCHANGED
 INDENT = 4
 
 
-def stringify(data, result=None, depth=1, diff_symbol=' '):
-    if result is None:
-        result = []
-    indent = ' ' * (INDENT * depth - 2)
-
-    for key, node in data.items():
-        if isinstance(node, dict):
-            result.append(f'{indent}{diff_symbol} {key}: {{')
-            stringify(node, result, depth + 1, ' ')
-            result.append(f'{indent}  }}')
-        elif isinstance(node, bool):
-            result.append(f'{indent}{diff_symbol} {key}: {str(node).lower()}')
-        elif node is None:
-            result.append(f'{indent}{diff_symbol} {key}: null')
-        else:
-            result.append(f'{indent}{diff_symbol} {key}: {node}')
-
-    return result
-
-
-def stringify2(value):
+def stringify(value):
     if isinstance(value, bool):
         return str(value).lower()
     elif value is None:
@@ -33,8 +13,9 @@ def stringify2(value):
 
 
 def format_stylish(diff):
-    def inner(data, depth=1, diff_symbol=' '):
+    def inner(data, depth=1):
         indent = ' ' * (INDENT * depth - 2)
+        result = []
 
         for key, node in sorted(data.items()):
             if isinstance(node, dict):
@@ -51,20 +32,25 @@ def format_stylish(diff):
                     elif node['state'] == UNCHANGED:
                         diff_symbol = ' '
 
-                    result.extend(stringify({key: value}, depth=depth, diff_symbol=diff_symbol))
+                    if isinstance(value, dict):
+                        result.append(f'{indent}{diff_symbol} {key}: {{')
+                        result.extend(inner(value, depth + 1))
+                        result.append(f'{indent}  }}')
+                    else:
+                        result.append(f'{indent}{diff_symbol} {key}: {stringify(value)}')
                     if node['state'] == UPDATED:
-                        result.extend(stringify({key: new_value}, depth=depth, diff_symbol='+'))
+                        result.append(f'{indent}+ {key}: {stringify(new_value)}')
                 else:
                     result.append(f'{indent}  {key}: {{')
-                    inner(node, depth=depth + 1)
+                    result.extend(inner(node, depth + 1))
                     result.append(f'{indent}  }}')
             else:
-                result.append(f'{indent}{diff_symbol} {key}: {stringify2(node)}')
+                result.append(f'{indent}  {key}: {stringify(node)}')
 
         return result
 
     result = ['{']
-    result = inner(diff)
+    result.extend(inner(diff))
     result.append('}')
 
     return '\n'.join(result)
