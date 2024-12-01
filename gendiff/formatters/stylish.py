@@ -1,4 +1,4 @@
-from gendiff.states import ADDED, REMOVED, UPDATED
+from gendiff.types import ADDED, REMOVED, UPDATED
 
 INDENT = 4
 
@@ -17,14 +17,14 @@ def format_stylish(diff):
         result = []
 
         for key, node in sorted(data.items()):
-            if isinstance(node, dict) and 'state' in node:
+            if isinstance(node, dict) and 'type' in node:
                 value = node['value']
-                state = node['state']
+                type = node['type']
                 diff_symbol = {
                     REMOVED: '-', UPDATED: '-', ADDED: '+'
-                }.get(state, ' ')
+                }.get(type, ' ')
 
-                if state == UPDATED:
+                if type == UPDATED:
                     old_value, new_value = value
                     value = old_value
 
@@ -37,7 +37,7 @@ def format_stylish(diff):
                         f'{indent}{diff_symbol} {key}: {stringify(value)}'
                     )
 
-                if state == UPDATED:
+                if type == UPDATED:
                     if isinstance(new_value, dict):
                         result.append(f'{indent}+ {key}: {{')
                         result.extend(inner(new_value, depth + 1))

@@ -1,4 +1,4 @@
-from gendiff.states import ADDED, REMOVED, UPDATED
+from gendiff.types import ADDED, REMOVED, UPDATED, NESTED
 
 
 def stringify(value):
@@ -19,21 +19,21 @@ def format_plain(data):
         for key, node in sorted(data.items()):
             path = f"{current_path}.{key}" if current_path else key
 
-            if 'state' in node:
-                state = node['state']
-                if state == REMOVED:
-                    result.append(f"Property '{path}' was removed")
-                elif state == ADDED:
-                    value = stringify(node['value'])
-                    result.append(f"Property '{path}' was added "
-                                  f"with value: {value}")
-                elif state == UPDATED:
-                    value = stringify(node['value'][0])
-                    new_value = stringify(node['value'][1])
-                    result.append(f"Property '{path}' was updated. "
-                                  f"From {value} to {new_value}")
-            else:
-                inner(node, path)
+            type = node['type']
+            if type == REMOVED:
+                result.append(f"Property '{path}' was removed")
+
+            elif type == ADDED:
+                value = stringify(node['value'])
+                result.append(f"Property '{path}' was added "
+                              f'with value: {value}')
+            elif type == UPDATED:
+                value = stringify(node['value'][0])
+                new_value = stringify(node['value'][1])
+                result.append(f"Property '{path}' was updated. "
+                              f'From {value} to {new_value}')
+            elif type == NESTED:
+                inner(node['value'], path)
 
         return result
 
