@@ -33,8 +33,6 @@ def generate_diff(file_path1, file_path2, format_name='stylish'):
     file1 = load_file(file_path1)
     file2 = load_file(file_path2)
 
-    print(file1)
-
     content1 = parse_file(file1, file1_extention)
     content2 = parse_file(file2, file2_extention)
 

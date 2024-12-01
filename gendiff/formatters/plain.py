@@ -29,8 +29,8 @@ def format_plain(data):
                 elif state == UPDATED:
                     value = stringify(node['value'][0])
                     new_value = stringify(node['value'][1])
-                    result.append(f"Property '{path}' was updated. From {value} to \
-                                   {new_value}")
+                    result.append(f"Property '{path}' was updated. "
+                                  f"From {value} to {new_value}")
             else:
                 inner(node, path)
 
