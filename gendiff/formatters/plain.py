@@ -1,4 +1,4 @@
-from gendiff.states import ADDED, UPDATED, REMOVED
+from gendiff.states import ADDED, REMOVED, UPDATED
 
 
 def stringify(value):
