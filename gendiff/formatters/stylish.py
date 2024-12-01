@@ -19,13 +19,14 @@ def format_stylish(diff):
         for key, node in sorted(data.items()):
             if isinstance(node, dict) and 'state' in node:
                 value = node['value']
+                state = node['state']
                 diff_symbol = {
                     REMOVED: '-', UPDATED: '-', ADDED: '+'
-                }.get(node['state'], ' ')
+                }.get(state, ' ')
 
-                if node['state'] == UPDATED:
-                    new_value = value[1]
-                    value = value[0]
+                if state == UPDATED:
+                    old_value, new_value = value
+                    value = old_value
 
                 if isinstance(value, dict):
                     result.append(f'{indent}{diff_symbol} {key}: {{')
@@ -34,7 +35,7 @@ def format_stylish(diff):
                 else:
                     result.append(f'{indent}{diff_symbol} {key}: {stringify(value)}')
 
-                if node['state'] == UPDATED:
+                if state == UPDATED:
                     if isinstance(new_value, dict):
                         result.append(f'{indent}+ {key}: {{')
                         result.extend(inner(new_value, depth + 1))
