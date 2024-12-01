@@ -25,7 +25,8 @@ def format_plain(data):
                     result.append(f"Property '{path}' was removed")
                 elif state == ADDED:
                     value = stringify(node['value'])
-                    result.append(f"Property '{path}' was added with value: {value}")
+                    result.append(f"Property '{path}' was added "
+                                  f"with value: {value}")
                 elif state == UPDATED:
                     value = stringify(node['value'][0])
                     new_value = stringify(node['value'][1])

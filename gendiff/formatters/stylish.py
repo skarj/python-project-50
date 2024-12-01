@@ -33,7 +33,9 @@ def format_stylish(diff):
                     result.extend(inner(value, depth + 1))
                     result.append(f'{indent}  }}')
                 else:
-                    result.append(f'{indent}{diff_symbol} {key}: {stringify(value)}')
+                    result.append(
+                        f'{indent}{diff_symbol} {key}: {stringify(value)}'
+                    )
 
                 if state == UPDATED:
                     if isinstance(new_value, dict):
@@ -41,7 +43,9 @@ def format_stylish(diff):
                         result.extend(inner(new_value, depth + 1))
                         result.append(f'{indent}  }}')
                     else:
-                        result.append(f'{indent}+ {key}: {stringify(new_value)}')
+                        result.append(
+                            f'{indent}+ {key}: {stringify(new_value)}'
+                        )
             else:
                 if isinstance(node, dict):
                     result.append(f'{indent}  {key}: {{')

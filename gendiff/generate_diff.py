@@ -13,16 +13,23 @@ def create_diff(content1, content2):
     diff = {}
     for key in all_keys:
         if key in removed_keys:
-            diff[key] = {'value': content1[key], 'state': REMOVED}
+            value = content1[key]
+            diff[key] = {'value': value, 'state': REMOVED}
         elif key in added_keys:
-            diff[key] = {'value': content2[key], 'state': ADDED}
+            value = content2[key]
+            diff[key] = {'value': value, 'state': ADDED}
         elif key in same_keys:
-            if isinstance(content1[key], dict) and isinstance(content2[key], dict):
-                diff[key] = create_diff(content1[key], content2[key])
-            elif content1[key] != content2[key]:
-                diff[key] = {'value': (content1[key], content2[key]), 'state': UPDATED}
+            value1 = content1[key]
+            value2 = content2[key]
+            if isinstance(value1, dict) and isinstance(value2, dict):
+                diff[key] = create_diff(value1, value2)
+            elif value1 != content2[key]:
+                diff[key] = {
+                    'value': (value1, value2),
+                    'state': UPDATED
+                }
             else:
-                diff[key] = {'value': content1[key], 'state': UNCHANGED}
+                diff[key] = {'value': value1, 'state': UNCHANGED}
     return diff
 
 
