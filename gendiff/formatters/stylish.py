@@ -29,8 +29,9 @@ def format_simple(node, depth=1):
 
     key, prop = node
     value = prop['value']
+    type = prop['type']
 
-    if prop['type'] == UPDATED:
+    if type == UPDATED:
         sign_del, sign_add = sign
         sign = sign_del
         value_old, value_new = value
@@ -38,7 +39,7 @@ def format_simple(node, depth=1):
 
     result = f'{indent}{sign} {key}: {stringify(value)}'
 
-    if prop['type'] == UPDATED:
+    if type == UPDATED:
         result = result + f'\n{indent}{sign_add} {key}: {stringify(value_new)}'
 
     return result
