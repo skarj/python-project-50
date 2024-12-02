@@ -11,43 +11,49 @@ def stringify(value):
     return value
 
 
-def get_sign(node):
-    _, prop = node
-    if prop['type'] == ADDED:
+def get_sign(type):
+    if type == ADDED:
         return '+'
-    elif prop['type'] == REMOVED:
+    elif type == REMOVED:
         return '-'
-    elif prop['type'] == UPDATED:
-        return ('-', '+')
-    elif prop['type'] == UNCHANGED:
+    elif type == UNCHANGED:
         return ' '
 
 
-def format_simple(node, depth=1):
-    indent = ' ' * (INDENT * depth - 2)
-    sign = get_sign(node)
+def get_indent(depth=1):
+    return ' ' * (INDENT * depth - 2)
+
+
+def format_updated(node):
+    indent = get_indent()
 
     key, prop = node
     value = prop['value']
+    value_old, value_new = value
+    sign_added = get_sign(ADDED)
+    sign_removed = get_sign(REMOVED)
+
+    return f'{indent}{sign_removed} {key}: {stringify(value_old)}\n' + \
+           f'{indent}{sign_added} {key}: {stringify(value_new)}'
+
+
+def format_node(node):
+    key, prop = node
     type = prop['type']
 
     if type == UPDATED:
-        sign_del, sign_add = sign
-        sign = sign_del
-        value_old, value_new = value
-        value = value_old
+        return format_updated(node)
 
-    result = f'{indent}{sign} {key}: {stringify(value)}'
+    indent = get_indent()
+    sign = get_sign(type)
 
-    if type == UPDATED:
-        result = result + f'\n{indent}{sign_add} {key}: {stringify(value_new)}'
-
-    return result
+    value = prop['value']
+    return f'{indent}{sign} {key}: {stringify(value)}'
 
 
 def format_stylish(diff):
     result = []
     for node in sorted(diff.items()):
-        result.append(format_simple(node))
+        result.append(format_node(node))
 
     return "{\n" + '\n'.join(result) + "\n}"
