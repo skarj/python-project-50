@@ -1,4 +1,4 @@
-from gendiff.types import ADDED, REMOVED, UPDATED, UNCHANGED
+from gendiff.types import ADDED, REMOVED, UPDATED, UNCHANGED, NESTED
 
 INDENT = 4
 
@@ -11,32 +11,31 @@ def stringify(value):
     return value
 
 
-def get_sign(type):
-    if type == ADDED:
+def get_sign(node_type):
+    if node_type == ADDED:
         return '+'
-    elif type == REMOVED:
+    elif node_type == REMOVED:
         return '-'
-    elif type == UNCHANGED:
-        return ' '
+    return ' '
 
 
 def get_indent(depth=1):
     return ' ' * (INDENT * depth - 2)
 
 
-def format_updated_node(node):
+def format_updated_node(node, depth=1):
     key, prop = node
     value = prop['value']
     value_old, value_new = value
 
-    removed = format_node((key, {"value": value_old, "type": REMOVED}))
-    added = format_node((key, {"value": value_new, "type": ADDED}))
+    removed = format_node((key, {"value": value_old, "type": REMOVED}), depth)
+    added = format_node((key, {"value": value_new, "type": ADDED}), depth)
 
     return f'{removed}\n{added}'
 
 
-def format_node(node):
-    indent = get_indent()
+def format_node(node, depth=1):
+    indent = get_indent(depth)
 
     key, prop = node
     type = prop['type']
@@ -46,15 +45,34 @@ def format_node(node):
     return f'{indent}{sign} {key}: {stringify(value)}'
 
 
-def format_stylish(diff):
+def format_nested_node(node, depth=1):
+    indent = get_indent(depth)
+
+    key, prop = node
+    node_type = prop['type']
+    value = prop['value']
+    sign = get_sign(node_type)
+
+    return f'{indent}{sign} {key}: {format_stylish(value, depth + 1)}'
+
+
+def format_dictionary(data):
+
+    return
+
+
+def format_stylish(diff, depth=1):
     result = []
     for node in sorted(diff.items()):
         _, prop = node
-        type = prop['type']
+        node_type = prop['type']
 
-        if type == UPDATED:
-            result.append(format_updated_node(node))
+        if node_type == NESTED:
+            result.append(format_nested_node(node, depth))
+        elif node_type == UPDATED:
+            result.append(format_updated_node(node, depth))
         else:
-            result.append(format_node(node))
+            result.append(format_node(node, depth))
 
-    return "{\n" + '\n'.join(result) + "\n}"
+    indent = ' ' * (INDENT * (depth - 1))  # TODO
+    return '{\n' + '\n'.join(result) + f'\n{indent}}}'
