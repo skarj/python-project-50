@@ -1,4 +1,4 @@
-from gendiff.types import ADDED, REMOVED, UPDATED
+from gendiff.types import ADDED, REMOVED, UPDATED, UNCHANGED
 
 INDENT = 4
 
@@ -11,53 +11,42 @@ def stringify(value):
     return value
 
 
+def get_sign(node):
+    _, prop = node
+    if prop['type'] == ADDED:
+        return '+'
+    elif prop['type'] == REMOVED:
+        return '-'
+    elif prop['type'] == UPDATED:
+        return ('-', '+')
+    elif prop['type'] == UNCHANGED:
+        return ' '
+
+
+def format_simple(node, depth=1):
+    indent = ' ' * (INDENT * depth - 2)
+    sign = get_sign(node)
+
+    key, prop = node
+    value = prop['value']
+
+    if prop['type'] == UPDATED:
+        sign_del, sign_add = sign
+        sign = sign_del
+        value_old, value_new = value
+        value = value_old
+
+    result = f'{indent}{sign} {key}: {stringify(value)}'
+
+    if prop['type'] == UPDATED:
+        result = result + f'\n{indent}{sign_add} {key}: {stringify(value_new)}'
+
+    return result
+
+
 def format_stylish(diff):
-    def inner(data, depth=1):
-        indent = ' ' * (INDENT * depth - 2)
-        result = []
+    result = []
+    for node in sorted(diff.items()):
+        result.append(format_simple(node))
 
-        for key, node in sorted(data.items()):
-            if isinstance(node, dict) and 'type' in node:
-                value = node['value']
-                type = node['type']
-                diff_symbol = {
-                    REMOVED: '-', UPDATED: '-', ADDED: '+'
-                }.get(type, ' ')
-
-                if type == UPDATED:
-                    old_value, new_value = value
-                    value = old_value
-
-                if isinstance(value, dict):
-                    result.append(f'{indent}{diff_symbol} {key}: {{')
-                    result.extend(inner(value, depth + 1))
-                    result.append(f'{indent}  }}')
-                else:
-                    result.append(
-                        f'{indent}{diff_symbol} {key}: {stringify(value)}'
-                    )
-
-                if type == UPDATED:
-                    if isinstance(new_value, dict):
-                        result.append(f'{indent}+ {key}: {{')
-                        result.extend(inner(new_value, depth + 1))
-                        result.append(f'{indent}  }}')
-                    else:
-                        result.append(
-                            f'{indent}+ {key}: {stringify(new_value)}'
-                        )
-            else:
-                if isinstance(node, dict):
-                    result.append(f'{indent}  {key}: {{')
-                    result.extend(inner(node, depth + 1))
-                    result.append(f'{indent}  }}')
-                else:
-                    result.append(f'{indent}  {key}: {stringify(node)}')
-
-        return result
-
-    result = ['{']
-    result.extend(inner(diff))
-    result.append('}')
-
-    return '\n'.join(result)
+    return "{\n" + '\n'.join(result) + "\n}"
