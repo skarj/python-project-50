@@ -1,4 +1,4 @@
-from gendiff.types import ADDED, REMOVED, UPDATED, UNCHANGED, NESTED
+from gendiff.types import ADDED, NESTED, REMOVED, UNCHANGED, UPDATED
 
 INDENT = 4
 
@@ -12,11 +12,8 @@ def stringify(value):
 
 
 def get_sign(node_type):
-    if node_type == ADDED:
-        return '+'
-    elif node_type == REMOVED:
-        return '-'
-    return ' '
+    signs = {ADDED: '+', REMOVED: '-', UNCHANGED: ' '}
+    return signs.get(node_type, ' ')
 
 
 def get_indent(depth=1):
@@ -25,8 +22,7 @@ def get_indent(depth=1):
 
 def format_updated_node(node, depth=1):
     node_key, node_props = node
-    node_value = node_props['value']
-    value_old, value_new = node_value
+    value_old, value_new = node_props['value']
 
     removed = format_node(
         (node_key, {"value": value_old, "type": REMOVED}), depth
@@ -42,9 +38,8 @@ def format_node(node, depth=1):
     indent = get_indent(depth)
 
     node_key, node_props = node
-    node_type = node_props['type']
     node_value = node_props['value']
-    sign = get_sign(node_type)
+    sign = get_sign(node_props['type'])
 
     if isinstance(node_value, dict):
         node = {}
@@ -60,9 +55,8 @@ def format_nested_node(node, depth=1):
     indent = get_indent(depth)
 
     node_key, node_props = node
-    node_type = node_props['type']
     node_value = node_props['value']
-    sign = get_sign(node_type)
+    sign = get_sign(node_props['type'])
 
     return f'{indent}{sign} {node_key}: {format_stylish(node_value, depth + 1)}'
 

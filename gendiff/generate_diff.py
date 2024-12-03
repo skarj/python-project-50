@@ -1,7 +1,7 @@
 from gendiff.file import get_extention, load_file
 from gendiff.formatters.utils import get_formatter
 from gendiff.parse import parse_file
-from gendiff.types import ADDED, REMOVED, UNCHANGED, UPDATED, NESTED
+from gendiff.types import ADDED, NESTED, REMOVED, UNCHANGED, UPDATED
 
 
 def create_diff(content1, content2):
