@@ -24,12 +24,16 @@ def get_indent(depth=1):
 
 
 def format_updated_node(node, depth=1):
-    key, prop = node
-    value = prop['value']
-    value_old, value_new = value
+    node_key, node_props = node
+    node_value = node_props['value']
+    value_old, value_new = node_value
 
-    removed = format_node((key, {"value": value_old, "type": REMOVED}), depth)
-    added = format_node((key, {"value": value_new, "type": ADDED}), depth)
+    removed = format_node(
+        (node_key, {"value": value_old, "type": REMOVED}), depth
+    )
+    added = format_node(
+        (node_key, {"value": value_new, "type": ADDED}), depth
+    )
 
     return f'{removed}\n{added}'
 
@@ -37,30 +41,30 @@ def format_updated_node(node, depth=1):
 def format_node(node, depth=1):
     indent = get_indent(depth)
 
-    key, val = node
-    type = val['type']
-    value = val['value']
-    sign = get_sign(type)
+    node_key, node_props = node
+    node_type = node_props['type']
+    node_value = node_props['value']
+    sign = get_sign(node_type)
 
-    if isinstance(value, dict):
+    if isinstance(node_value, dict):
         node = {}
-        for k, v in value.items():
-            node[k] = {'value': v, 'type': UNCHANGED}
+        for key, value in node_value.items():
+            node[key] = {'value': value, 'type': UNCHANGED}
 
-        value = format_stylish(node, depth + 1)
+        node_value = format_stylish(node, depth + 1)
 
-    return f'{indent}{sign} {key}: {stringify(value)}'
+    return f'{indent}{sign} {node_key}: {stringify(node_value)}'
 
 
 def format_nested_node(node, depth=1):
     indent = get_indent(depth)
 
-    key, prop = node
-    node_type = prop['type']
-    value = prop['value']
+    node_key, node_props = node
+    node_type = node_props['type']
+    node_value = node_props['value']
     sign = get_sign(node_type)
 
-    return f'{indent}{sign} {key}: {format_stylish(value, depth + 1)}'
+    return f'{indent}{sign} {node_key}: {format_stylish(node_value, depth + 1)}'
 
 
 def format_stylish(diff, depth=1):
@@ -75,5 +79,5 @@ def format_stylish(diff, depth=1):
         else:
             result.append(format_node(node, depth))
 
-    indent = ' ' * (INDENT * (depth - 1))  # TODO
+    indent = ' ' * (INDENT * (depth - 1))
     return '{\n' + '\n'.join(result) + f'\n{indent}}}'
