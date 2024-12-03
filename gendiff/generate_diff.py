@@ -1,7 +1,7 @@
 from gendiff.file import get_extention, load_file
 from gendiff.formatters.utils import get_formatter
 from gendiff.parse import parse_file
-from gendiff.states import ADDED, REMOVED, UNCHANGED, UPDATED
+from gendiff.types import ADDED, NESTED, REMOVED, UNCHANGED, UPDATED
 
 
 def create_diff(content1, content2):
@@ -14,22 +14,34 @@ def create_diff(content1, content2):
     for key in all_keys:
         if key in removed_keys:
             value = content1[key]
-            diff[key] = {'value': value, 'state': REMOVED}
+            diff[key] = {
+                'value': value,
+                'type': REMOVED
+            }
         elif key in added_keys:
             value = content2[key]
-            diff[key] = {'value': value, 'state': ADDED}
+            diff[key] = {
+                'value': value,
+                'type': ADDED
+            }
         elif key in same_keys:
             value1 = content1[key]
             value2 = content2[key]
             if isinstance(value1, dict) and isinstance(value2, dict):
-                diff[key] = create_diff(value1, value2)
-            elif value1 != content2[key]:
+                diff[key] = {
+                    'value': create_diff(value1, value2),
+                    'type': NESTED
+                }
+            elif value1 != value2:
                 diff[key] = {
                     'value': (value1, value2),
-                    'state': UPDATED
+                    'type': UPDATED
                 }
             else:
-                diff[key] = {'value': value1, 'state': UNCHANGED}
+                diff[key] = {
+                    'value': value1,
+                    'type': UNCHANGED
+                }
     return diff
 
 
