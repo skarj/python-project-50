@@ -37,10 +37,17 @@ def format_updated_node(node, depth=1):
 def format_node(node, depth=1):
     indent = get_indent(depth)
 
-    key, prop = node
-    type = prop['type']
-    value = prop['value']
+    key, val = node
+    type = val['type']
+    value = val['value']
     sign = get_sign(type)
+
+    if isinstance(value, dict):
+        new_node = {}
+        for k, v in value.items():
+            new_node[k] = {'value': v, 'type': UNCHANGED}
+
+        value = format_stylish(new_node, depth + 1)
 
     return f'{indent}{sign} {key}: {stringify(value)}'
 
@@ -56,17 +63,11 @@ def format_nested_node(node, depth=1):
     return f'{indent}{sign} {key}: {format_stylish(value, depth + 1)}'
 
 
-def format_dictionary(data):
-
-    return
-
-
 def format_stylish(diff, depth=1):
     result = []
     for node in sorted(diff.items()):
-        _, prop = node
-        node_type = prop['type']
-
+        _, value = node
+        node_type = value['type']
         if node_type == NESTED:
             result.append(format_nested_node(node, depth))
         elif node_type == UPDATED:
