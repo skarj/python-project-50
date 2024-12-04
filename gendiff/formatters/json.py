@@ -1,5 +1,7 @@
 import json
 
+from gendiff.types import NESTED
+
 
 def convert_nodes_to_dict(nodes):
     result = {}
@@ -7,8 +9,9 @@ def convert_nodes_to_dict(nodes):
     for node in nodes:
         value = node.value
         key = node.key
+        type = node.type
 
-        if isinstance(value, list):
+        if isinstance(value, list) and type == NESTED:
             value = convert_nodes_to_dict(value)
 
         result[key] = {'value': value, 'type': node.type}
