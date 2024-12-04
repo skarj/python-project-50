@@ -1,5 +1,6 @@
 from gendiff.file import get_extention, load_file
 from gendiff.formatters.utils import get_formatter
+from gendiff.models import Node
 from gendiff.parse import parse_file
 from gendiff.types import ADDED, NESTED, REMOVED, UNCHANGED, UPDATED
 
@@ -10,38 +11,23 @@ def create_diff(content1, content2):
     same_keys = content2.keys() & content1.keys()
     all_keys = content1.keys() | content2.keys()
 
-    diff = {}
+    diff = []
     for key in all_keys:
         if key in removed_keys:
             value = content1[key]
-            diff[key] = {
-                'value': value,
-                'type': REMOVED
-            }
+            diff.append(Node(key, value, REMOVED))
         elif key in added_keys:
             value = content2[key]
-            diff[key] = {
-                'value': value,
-                'type': ADDED
-            }
+            diff.append(Node(key, value, ADDED))
         elif key in same_keys:
             value1 = content1[key]
             value2 = content2[key]
             if isinstance(value1, dict) and isinstance(value2, dict):
-                diff[key] = {
-                    'value': create_diff(value1, value2),
-                    'type': NESTED
-                }
+                diff.append(Node(key, create_diff(value1, value2), NESTED))
             elif value1 != value2:
-                diff[key] = {
-                    'value': (value1, value2),
-                    'type': UPDATED
-                }
+                diff.append(Node(key, (value1, value2), UPDATED))
             else:
-                diff[key] = {
-                    'value': value1,
-                    'type': UNCHANGED
-                }
+                diff.append(Node(key, value1, UNCHANGED))
     return diff
 
 
