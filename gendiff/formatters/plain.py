@@ -29,8 +29,8 @@ def format_plain(diff):
                 result.append(f"Property '{path}' was added "
                               f'with value: {value}')
             elif type == UPDATED:
-                value = stringify(node.value[0])
-                new_value = stringify(node.value[1])
+                value = stringify(node.value.old)
+                new_value = stringify(node.value.new)
                 result.append(f"Property '{path}' was updated. "
                               f'From {value} to {new_value}')
             elif type == NESTED:

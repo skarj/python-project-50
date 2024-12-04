@@ -22,12 +22,11 @@ def get_indent(depth=1):
 
 
 def format_updated_node(node, depth=1):
-    value_old, value_new = node.value
     removed = format_node(
-        Node(node.key, value_old, REMOVED), depth
+        Node(node.key, node.value.old, REMOVED), depth
     )
     added = format_node(
-        Node(node.key, value_new, ADDED), depth
+        Node(node.key, node.value.new, ADDED), depth
     )
 
     return f'{removed}\n{added}'
