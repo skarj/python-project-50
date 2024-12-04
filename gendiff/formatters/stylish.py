@@ -42,11 +42,11 @@ def format_node(node, depth=1):
     sign = get_sign(node_props['type'])
 
     if isinstance(node_value, dict):
-        node = {}
+        nodes = {}
         for key, value in node_value.items():
-            node[key] = {'value': value, 'type': UNCHANGED}
+            nodes[key] = {'value': value, 'type': UNCHANGED}
 
-        node_value = format_stylish(node, depth + 1)
+        node_value = format_stylish(nodes, depth + 1)
 
     return f'{indent}{sign} {node_key}: {stringify(node_value)}'
 
