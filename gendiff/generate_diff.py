@@ -1,6 +1,6 @@
 from gendiff.file import get_extention, load_file
 from gendiff.formatters.utils import get_formatter
-from gendiff.models import Node, ChangedValue
+from gendiff.models import ChangedValue, Node
 from gendiff.parse import parse_file
 from gendiff.types import ADDED, NESTED, REMOVED, UNCHANGED, UPDATED
 
