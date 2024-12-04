@@ -52,13 +52,16 @@ def format_node(node, depth=1):
 
 
 def format_nested_node(node, depth=1):
-    indent = get_indent(depth)
-
     node_key, node_props = node
     node_value = node_props['value']
-    sign = get_sign(node_props['type'])
+    node_type = node_props['type']
 
-    return f'{indent}{sign} {node_key}: {format_stylish(node_value, depth + 1)}'
+    return format_node(
+        (node_key, {
+            "value": format_stylish(node_value, depth + 1),
+            "type": node_type
+        }), depth
+    )
 
 
 def format_stylish(diff, depth=1):
