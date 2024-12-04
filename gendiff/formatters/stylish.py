@@ -38,10 +38,10 @@ def format_node(node, depth=1):
     sign = get_sign(node.type)
     node_value = node.value
 
-    if isinstance(node_value, list):
+    if isinstance(node.value, dict):
         nodes = []
-        for node in node_value:
-            nodes.append(Node(node.key, node.value, UNCHANGED))
+        for key, value in node.value.items():
+            nodes.append(Node(key, value, UNCHANGED))
 
         node_value = format_stylish(nodes, depth + 1)
 
