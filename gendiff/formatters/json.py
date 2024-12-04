@@ -1,7 +1,7 @@
 import json
 
 
-def format_nodes(nodes):
+def convert_nodes_to_dict(nodes):
     result = {}
 
     for node in nodes:
@@ -9,7 +9,7 @@ def format_nodes(nodes):
         key = node.key
 
         if isinstance(value, list):
-            value = format_nodes(value)
+            value = convert_nodes_to_dict(value)
 
         result[key] = {'value': value, 'type': node.type}
 
@@ -17,6 +17,6 @@ def format_nodes(nodes):
 
 
 def format_json(data):
-    result = format_nodes(data)
+    result = convert_nodes_to_dict(data)
 
     return json.dumps(result)
