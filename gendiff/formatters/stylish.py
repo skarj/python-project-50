@@ -12,8 +12,12 @@ def stringify(value):
 
 
 def get_sign(node_type):
-    signs = {ADDED: '+', REMOVED: '-', UNCHANGED: ' '}
-    return signs.get(node_type, ' ')
+    if node_type == ADDED:
+        return '+'
+    elif node_type == REMOVED:
+        return '-'
+
+    return ' '
 
 
 def get_indent(depth=1):
