@@ -11,7 +11,7 @@ def convert_nodes_to_dict(nodes):
         key = node.key
         type = node.type
 
-        if isinstance(value, list) and type == NESTED:
+        if type == NESTED:
             value = convert_nodes_to_dict(value)
 
         result[key] = {'value': value, 'type': node.type}
