@@ -45,20 +45,20 @@ def format_node(node, depth=1):
         for key, value in node.value.items():
             nodes.append(Node(key, value, UNCHANGED))
 
-        node_value = format_stylish(nodes, depth + 1)
+        node_value = format_nodes(nodes, depth + 1)
 
     return f'{indent}{sign} {node.key}: {stringify(node_value)}'
 
 
 def format_nested_node(node, depth=1):
     return format_node(
-        Node(node.key, format_stylish(node.value, depth + 1), node.type), depth
+        Node(node.key, format_nodes(node.value, depth + 1), node.type), depth
     )
 
 
-def format_stylish(diff, depth=1):
+def format_nodes(nodes, depth=1):
     result = []
-    for node in sorted(diff):
+    for node in sorted(nodes):
         if node.type == NESTED:
             result.append(format_nested_node(node, depth))
         elif node.type == UPDATED:
@@ -68,3 +68,7 @@ def format_stylish(diff, depth=1):
 
     indent = ' ' * (INDENT * (depth - 1))
     return '{\n' + '\n'.join(result) + f'\n{indent}}}'
+
+
+def format_stylish(diff):
+    return format_nodes(diff)
