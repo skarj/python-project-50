@@ -1,5 +1,4 @@
-from gendiff.models import Node
-from gendiff.types import ADDED, NESTED, REMOVED, UNCHANGED, UPDATED
+from gendiff.diff import ADDED, NESTED, REMOVED, UNCHANGED, UPDATED, Node
 
 INDENT = 4
 

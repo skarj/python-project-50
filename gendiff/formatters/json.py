@@ -1,6 +1,6 @@
 import json
 
-from gendiff.types import NESTED
+from gendiff.diff import NESTED
 
 
 def convert_nodes_to_dict(nodes):
