@@ -45,7 +45,7 @@ def format_node(node, depth=1):
         for key, value in node.value.items():
             nodes.append(Node(key, value, UNCHANGED))
 
-        node_value = format_nodes(nodes, depth + 1)
+        node_value = format_nodes(nodes, depth + 1, sort=False)
 
     return f'{indent}{sign} {node.key}: {stringify(node_value)}'
 
@@ -56,9 +56,11 @@ def format_nested_node(node, depth=1):
     )
 
 
-def format_nodes(nodes, depth=1):
+def format_nodes(nodes, depth=1, sort=True):
+    nodes = sorted(nodes) if sort else nodes
     result = []
-    for node in sorted(nodes):
+
+    for node in nodes:
         if node.type == NESTED:
             result.append(format_nested_node(node, depth))
         elif node.type == UPDATED:
