@@ -1,6 +1,6 @@
 import json
 
-from gendiff.diff import NESTED
+from gendiff.diff import NESTED, ChangedValue
 
 
 def convert_nodes_to_dict(nodes):
@@ -13,6 +13,9 @@ def convert_nodes_to_dict(nodes):
 
         if type == NESTED:
             value = convert_nodes_to_dict(value)
+
+        if isinstance(value, ChangedValue):
+            value = {"old": value.old, "new": value.new}
 
         result[key] = {'value': value, 'type': node.type}
 
