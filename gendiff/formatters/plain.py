@@ -16,6 +16,7 @@ def stringify(value):
 
 def format_plain(diff):
     result = []
+
     def inner(diff, current_path=''):
         for node in sorted(diff):
             key = node.key
