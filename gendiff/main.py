@@ -1,6 +1,6 @@
-from gendiff.generate_diff import create_diff
 from gendiff.file import get_extention, load_file
 from gendiff.formatters.utils import get_formatter
+from gendiff.generate_diff import create_diff
 from gendiff.parse import parse_file
 
 

@@ -1,4 +1,11 @@
-from gendiff.generate_diff import ADDED, NESTED, REMOVED, UNCHANGED, UPDATED, Node
+from gendiff.generate_diff import (
+    ADDED,
+    NESTED,
+    REMOVED,
+    UNCHANGED,
+    UPDATED,
+    Node,
+)
 
 INDENT = 4
 
