@@ -1,4 +1,4 @@
-from gendiff.diff import ADDED, NESTED, REMOVED, UPDATED
+from gendiff.generate_diff import ADDED, NESTED, REMOVED, UPDATED
 
 
 def stringify(value):

@@ -1,20 +1,35 @@
-from gendiff.diff import create_diff
-from gendiff.file import get_extention, load_file
-from gendiff.formatters.utils import get_formatter
-from gendiff.parse import parse_file
+from collections import namedtuple
+
+REMOVED = 'removed'
+ADDED = 'added'
+UPDATED = 'updated'
+UNCHANGED = 'unchanged'
+NESTED = 'nested'
+
+Node = namedtuple('Node', 'key value type')
+ChangedValue = namedtuple('ChangedValue', 'old new')
 
 
-def generate_diff(file_path1, file_path2, format_name='stylish'):
-    file1_extention = get_extention(file_path1)
-    file2_extention = get_extention(file_path2)
+def create_diff(content1, content2):
+    diff = []
+    for key in content1.keys() - content2.keys():
+        value = content1[key]
+        diff.append(Node(key, value, REMOVED))
 
-    file1 = load_file(file_path1)
-    file2 = load_file(file_path2)
+    for key in content2.keys() - content1.keys():
+        value = content2[key]
+        diff.append(Node(key, value, ADDED))
 
-    content1 = parse_file(file1, file1_extention)
-    content2 = parse_file(file2, file2_extention)
+    for key in content2.keys() & content1.keys():
+        old_value = content1[key]
+        new_value = content2[key]
 
-    diff = create_diff(content1, content2)
-    formatter = get_formatter(format_name)
+        if isinstance(old_value, dict) and isinstance(new_value, dict):
+            diff.append(Node(key, create_diff(old_value, new_value), NESTED))
+        elif old_value != new_value:
+            changed_value = ChangedValue(old_value, new_value)
+            diff.append(Node(key, changed_value, UPDATED))
+        else:
+            diff.append(Node(key, old_value, UNCHANGED))
 
-    return formatter(diff)
+    return diff

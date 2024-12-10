@@ -1,7 +1,7 @@
 import json
 
 import pytest
-from gendiff.generate_diff import generate_diff
+from gendiff.main import generate_diff
 
 
 @pytest.fixture(name='input_files_simple')
