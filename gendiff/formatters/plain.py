@@ -18,7 +18,7 @@ def format_plain(diff):
     result = []
 
     def inner(diff, current_path=''):
-        for node in sorted(diff):
+        for node in sorted(diff, key=lambda node: node.key):
             key = node.key
             path = f"{current_path}.{key}" if current_path else key
 

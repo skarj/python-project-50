@@ -64,7 +64,7 @@ def format_nested_node(node, depth=1):
 
 
 def format_nodes(nodes, depth=1, sort=True):
-    nodes = sorted(nodes) if sort else nodes
+    nodes = sorted(nodes, key=lambda node: node.key) if sort else nodes
     result = []
 
     for node in nodes:
