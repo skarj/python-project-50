@@ -14,7 +14,7 @@ Compare two configuration files and show a difference
 ## Comparing Nested Structures
 [![asciicast](https://asciinema.org/a/J3fSU7N5qn1s19mX9qN6nuUQc.svg)](https://asciinema.org/a/J3fSU7N5qn1s19mX9qN6nuUQc)
 
-## Plain Output Format Format
+## Plain Output
 [![asciicast](https://asciinema.org/a/QyP6qqGnw9RR72FpJyL6G26eI.svg)](https://asciinema.org/a/QyP6qqGnw9RR72FpJyL6G26eI)
 
 ## JSON Output
